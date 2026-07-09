@@ -1,198 +1,126 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { HiStar, HiChevronLeft, HiChevronRight } from "react-icons/hi";
 
 const testimonials = [
   {
     name: "Ayse K.",
     tour: "Misir Turu",
-    text: "Hayatimda yaptigim en guzel seyahatlerden biriydi. Rehberimiz cok bilgili ve ilgiliydi. Piramitleri gormek cocukluk hayalimdi, sonunda gerceklesti!",
-    rating: 5,
+    text: "Helal yemek konusunda hic sikinti yasanmadi. Hz. Huseyin Camii'nde namaz kilmak ayri bir heyecan. Ailemle gonul rahatligiyla gittik, elinize saglik.",
     initials: "AK",
-    color: "from-amber-400 to-orange-500",
   },
   {
     name: "Mehmet Y.",
     tour: "Bosna Hersek Turu",
-    text: "Saraybosna ve Mostar'da gecirdigimiz gunler unutulmazdi. Organizasyon mukemmeldi, her sey planlanan sekilde gerceklesti. Ailece cok memnun kaldik.",
-    rating: 5,
+    text: "Gazi Husrev Bey Camii'nde cuma namazi kildik, Mostar'da ezan sesi esliginde kopruden izledik. Osmanli izlerini yerinde gormek baska bir duygu.",
     initials: "MY",
-    color: "from-blue-400 to-cyan-500",
   },
   {
     name: "Fatma S.",
     tour: "Fas Turu",
-    text: "Marakes sokaklarinda kaybolmak, Sahara'da yildizlari izlemek... Ocak Turizm'e cok tesekkurler, her seyi dusunmuslerdi. Hayalimdeki tatildi.",
-    rating: 5,
+    text: "Karaviyyin Medresesi'ni gormek listemizdeydi. Sahrada yildizlarin altinda kalmak, helal yemekler, huzurlu bir ortam. Her seyi dusunmusler.",
     initials: "FS",
-    color: "from-rose-400 to-pink-500",
   },
   {
     name: "Ali D.",
     tour: "Ozbekistan Turu",
-    text: "Semerkant'in guzelligine inanamadik. Tarihi mekanlar, lezzetli yemekler ve harika bir grup. Kesinlikle tavsiye ederim, tekrar gidecegiz!",
-    rating: 5,
+    text: "Imam Buhari hazretlerinin turbesini ziyaret etmek cok anlamliydi. Semerkant medreseleri, Buhara'nin manevi atmosferi... Kesinlikle gidin.",
     initials: "AD",
-    color: "from-emerald-400 to-teal-500",
   },
   {
     name: "Zeynep T.",
-    tour: "Misir & Fas Turu",
-    text: "Iki ulkeyi tek seyahatte gormek muhteseemdi. Nil kruvaziyer deneyimi hayallerimin otesindeydi. Ocak Turizm'i herkese gonu rahatligiyla oneririm.",
-    rating: 5,
+    tour: "Misir Turu",
+    text: "Namaz vakitlerine gore program yapilmasi bizi cok rahatlatti. El-Ezher Camii'nde vakit namazi kilmak, Nil'de huzurlu bir yolculuk. Herkese tavsiye ederim.",
     initials: "ZT",
-    color: "from-violet-400 to-purple-500",
+  },
+  {
+    name: "Hasan B.",
+    tour: "Bosna Hersek Turu",
+    text: "Uc kez gittik, her seferinde ayni hassasiyet. Alkolsuz otel, helal mutfak, namaz molalari — ailece rahat ettik. Guvenilir ve samimi bir ekip.",
+    initials: "HB",
   },
 ];
 
 export default function Testimonials() {
-  const [current, setCurrent] = useState(0);
-
-  const next = () => setCurrent((prev) => (prev + 1) % testimonials.length);
-  const prev = () => setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  const [page, setPage] = useState(0);
+  const perPage = 3;
+  const totalPages = Math.ceil(testimonials.length / perPage);
+  const visible = testimonials.slice(page * perPage, page * perPage + perPage);
 
   return (
-    <section id="yorumlar" className="py-24 lg:py-32 bg-gray-warm relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-navy/10 to-transparent" />
-
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Left - Header */}
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="flex items-center gap-3 mb-4"
-            >
-              <div className="section-divider" />
-              <span className="text-gold font-heading font-semibold text-sm tracking-[0.2em] uppercase">
-                Yorumlar
-              </span>
-            </motion.div>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-4xl sm:text-5xl font-heading font-bold text-navy leading-tight mb-6"
-            >
-              Yolcularimiz <span className="text-gradient">Ne Diyor?</span>
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="text-navy-light text-lg leading-relaxed mb-8"
-            >
-              500'den fazla mutlu yolcumuzun deneyimlerinden sadece birkaci.
-              Gercek hikayeler, gercek mutluluklar.
-            </motion.p>
-
-            {/* Trust indicators */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="flex items-center gap-6"
-            >
-              <div className="flex items-center gap-2">
-                <div className="flex">
-                  {[...Array(5)].map((_, i) => (
-                    <HiStar key={i} className="text-gold text-xl" />
-                  ))}
-                </div>
-                <span className="font-heading font-bold text-navy text-lg">5.0</span>
-              </div>
-              <div className="h-8 w-px bg-navy/10" />
-              <div>
-                <span className="font-heading font-bold text-navy">500+</span>
-                <span className="text-navy-light text-sm ml-1.5">Mutlu Yolcu</span>
-              </div>
-            </motion.div>
+    <section id="yorumlar" className="py-16 lg:py-20 bg-gray-50">
+      <div className="max-w-6xl mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-10">
+          <h2 className="text-2xl sm:text-3xl font-heading font-bold text-primary mb-2">
+            Musterilerimiz Ne Diyor?
+          </h2>
+          <div className="flex items-center justify-center gap-2 mb-1">
+            {[...Array(5)].map((_, i) => (
+              <HiStar key={i} className="text-gold text-lg" />
+            ))}
+            <span className="font-heading font-bold text-primary ml-1">5.0</span>
           </div>
-
-          {/* Right - Testimonial card */}
-          <div>
-            <div className="relative">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={current}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.4 }}
-                  className="bg-white rounded-3xl p-8 sm:p-10 shadow-xl shadow-navy/5"
-                >
-                  {/* Quote mark */}
-                  <div className="text-gold/20 text-7xl font-heading leading-none mb-4">&ldquo;</div>
-
-                  {/* Stars */}
-                  <div className="flex gap-1 mb-5">
-                    {Array.from({ length: testimonials[current].rating }).map((_, i) => (
-                      <HiStar key={i} className="text-gold text-lg" />
-                    ))}
-                  </div>
-
-                  {/* Quote */}
-                  <p className="text-navy text-lg leading-relaxed mb-8">
-                    {testimonials[current].text}
-                  </p>
-
-                  {/* Author */}
-                  <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${testimonials[current].color} flex items-center justify-center text-white font-heading font-bold text-sm`}>
-                      {testimonials[current].initials}
-                    </div>
-                    <div>
-                      <p className="font-heading font-semibold text-navy">
-                        {testimonials[current].name}
-                      </p>
-                      <p className="text-navy-light text-sm">
-                        {testimonials[current].tour}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-
-              {/* Controls */}
-              <div className="flex flex-col-reverse gap-4 sm:flex-row sm:items-center sm:justify-between mt-6">
-                <div className="flex gap-2">
-                  {testimonials.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setCurrent(i)}
-                      className={`h-2 rounded-full transition-all duration-300 ${
-                        i === current ? "bg-gold w-8" : "bg-navy/10 w-2 hover:bg-navy/20"
-                      }`}
-                    />
-                  ))}
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={prev}
-                    className="w-11 h-11 rounded-xl border border-navy/10 hover:border-gold hover:text-gold flex items-center justify-center text-navy transition-all"
-                    aria-label="Previous"
-                  >
-                    <HiChevronLeft className="text-lg" />
-                  </button>
-                  <button
-                    onClick={next}
-                    className="w-11 h-11 rounded-xl border border-navy/10 hover:border-gold hover:text-gold flex items-center justify-center text-navy transition-all"
-                    aria-label="Next"
-                  >
-                    <HiChevronRight className="text-lg" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <p className="text-gray-500 text-sm">
+            Ailelerden gelen gercek deneyimler
+          </p>
         </div>
+
+        {/* Review cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {visible.map((t) => (
+            <div
+              key={t.name}
+              className="bg-white rounded-2xl p-6 shadow-sm hover:-translate-y-1 hover:shadow-md transition-all duration-200 border border-gray-100"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-11 h-11 bg-primary rounded-full flex items-center justify-center text-white font-heading font-bold text-sm">
+                  {t.initials}
+                </div>
+                <div>
+                  <p className="font-heading font-semibold text-primary text-sm">{t.name}</p>
+                  <p className="text-gray-400 text-xs">{t.tour}</p>
+                </div>
+              </div>
+              <div className="flex gap-0.5 mb-3">
+                {[...Array(5)].map((_, i) => (
+                  <HiStar key={i} className="text-gold text-sm" />
+                ))}
+              </div>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                &ldquo;{t.text}&rdquo;
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-3 mt-8">
+            <button
+              onClick={() => setPage((p) => Math.max(0, p - 1))}
+              disabled={page === 0}
+              className="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-primary hover:border-primary disabled:opacity-30 transition-colors"
+            >
+              <HiChevronLeft />
+            </button>
+            {[...Array(totalPages)].map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setPage(i)}
+                className={`w-2.5 h-2.5 rounded-full transition-all ${i === page ? "bg-primary w-6" : "bg-gray-300"}`}
+              />
+            ))}
+            <button
+              onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+              disabled={page === totalPages - 1}
+              className="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-primary hover:border-primary disabled:opacity-30 transition-colors"
+            >
+              <HiChevronRight />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
