@@ -52,9 +52,9 @@ export default function Hero({ settings }: Props) {
       {slides.map((slide, i) => (
         <div key={i} className={`absolute inset-0 transition-opacity duration-700 ${i === current ? "opacity-100" : "opacity-0"}`}>
           {slide.video && i === current ? (
-            <video ref={videoRef} src={slide.video} muted playsInline loop autoPlay className="absolute inset-0 w-full h-full object-cover" />
+            <video ref={videoRef} src={slide.video} muted playsInline loop autoPlay preload="none" className="absolute inset-0 w-full h-full object-cover" />
           ) : (
-            <Image src={slide.image} alt={slide.label} fill className="object-cover" priority={i === 0} sizes="100vw" />
+            <Image src={slide.image} alt={slide.label} fill className="object-cover" priority={i === 0} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1920px" quality={75} />
           )}
         </div>
       ))}
