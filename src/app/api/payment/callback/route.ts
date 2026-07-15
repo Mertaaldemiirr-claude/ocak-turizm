@@ -17,6 +17,9 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = createServiceClient()
+    if (!supabase) {
+      return new Response('Payment system not configured', { status: 503 })
+    }
 
     if (status === 'success') {
       // Odeme basarili — rezervasyonu guncelle

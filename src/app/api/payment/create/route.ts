@@ -12,6 +12,9 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = createServiceClient()
+    if (!supabase) {
+      return Response.json({ error: 'Ödeme sistemi henüz aktif değil' }, { status: 503 })
+    }
 
     // Benzersiz siparis ID
     const merchantOid = `OT-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
