@@ -2,47 +2,22 @@
 
 import { useState } from "react";
 import { HiStar, HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import type { Testimonial } from "@/sanity/lib/types";
 
-const testimonials = [
-  {
-    name: "Ayse K.",
-    tour: "Misir Turu",
-    text: "Helal yemek konusunda hic sikinti yasanmadi. Hz. Huseyin Camii'nde namaz kilmak ayri bir heyecan. Ailemle gonul rahatligiyla gittik, elinize saglik.",
-    initials: "AK",
-  },
-  {
-    name: "Mehmet Y.",
-    tour: "Bosna Hersek Turu",
-    text: "Gazi Husrev Bey Camii'nde cuma namazi kildik, Mostar'da ezan sesi esliginde kopruden izledik. Osmanli izlerini yerinde gormek baska bir duygu.",
-    initials: "MY",
-  },
-  {
-    name: "Fatma S.",
-    tour: "Fas Turu",
-    text: "Karaviyyin Medresesi'ni gormek listemizdeydi. Sahrada yildizlarin altinda kalmak, helal yemekler, huzurlu bir ortam. Her seyi dusunmusler.",
-    initials: "FS",
-  },
-  {
-    name: "Ali D.",
-    tour: "Ozbekistan Turu",
-    text: "Imam Buhari hazretlerinin turbesini ziyaret etmek cok anlamliydi. Semerkant medreseleri, Buhara'nin manevi atmosferi... Kesinlikle gidin.",
-    initials: "AD",
-  },
-  {
-    name: "Zeynep T.",
-    tour: "Misir Turu",
-    text: "Namaz vakitlerine gore program yapilmasi bizi cok rahatlatti. El-Ezher Camii'nde vakit namazi kilmak, Nil'de huzurlu bir yolculuk. Herkese tavsiye ederim.",
-    initials: "ZT",
-  },
-  {
-    name: "Hasan B.",
-    tour: "Bosna Hersek Turu",
-    text: "Uc kez gittik, her seferinde ayni hassasiyet. Alkolsuz otel, helal mutfak, namaz molalari — ailece rahat ettik. Guvenilir ve samimi bir ekip.",
-    initials: "HB",
-  },
-];
+interface Props {
+  testimonials: Testimonial[];
+}
 
-export default function Testimonials() {
+function getInitials(name: string): string {
+  return name
+    .split(" ")
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
+}
+
+export default function Testimonials({ testimonials }: Props) {
   const [page, setPage] = useState(0);
   const perPage = 3;
   const totalPages = Math.ceil(testimonials.length / perPage);
@@ -51,7 +26,6 @@ export default function Testimonials() {
   return (
     <section id="yorumlar" className="py-16 lg:py-20 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4">
-        {/* Header */}
         <div className="text-center mb-10">
           <h2 className="text-2xl sm:text-3xl font-heading font-bold text-primary mb-2">
             Musterilerimiz Ne Diyor?
@@ -67,16 +41,15 @@ export default function Testimonials() {
           </p>
         </div>
 
-        {/* Review cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {visible.map((t) => (
             <div
-              key={t.name}
+              key={t._id}
               className="bg-white rounded-2xl p-6 shadow-sm hover:-translate-y-1 hover:shadow-md transition-all duration-200 border border-gray-100"
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-11 h-11 bg-primary rounded-full flex items-center justify-center text-white font-heading font-bold text-sm">
-                  {t.initials}
+                  {getInitials(t.name)}
                 </div>
                 <div>
                   <p className="font-heading font-semibold text-primary text-sm">{t.name}</p>
@@ -84,7 +57,7 @@ export default function Testimonials() {
                 </div>
               </div>
               <div className="flex gap-0.5 mb-3">
-                {[...Array(5)].map((_, i) => (
+                {[...Array(t.rating)].map((_, i) => (
                   <HiStar key={i} className="text-gold text-sm" />
                 ))}
               </div>
@@ -95,7 +68,6 @@ export default function Testimonials() {
           ))}
         </div>
 
-        {/* Pagination */}
         {totalPages > 1 && (
           <div className="flex items-center justify-center gap-3 mt-8">
             <button

@@ -3,10 +3,20 @@
 import { useState } from "react";
 import { HiPhone, HiMail, HiLocationMarker } from "react-icons/hi";
 import { FaWhatsapp } from "react-icons/fa";
+import type { SiteSettings } from "@/sanity/lib/types";
 
 const destinations = ["Misir", "Fas", "Ozbekistan", "Bosna Hersek"];
 
-export default function ReservationForm() {
+interface Props {
+  settings: SiteSettings | null;
+}
+
+export default function ReservationForm({ settings }: Props) {
+  const phone = settings?.phone || "+90 555 123 4567";
+  const email = settings?.email || "info@ocakturizm.com";
+  const address = settings?.address || "Istanbul, Turkiye";
+  const whatsapp = settings?.whatsapp || "905551234567";
+
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -32,7 +42,7 @@ export default function ReservationForm() {
   const whatsappMessage = encodeURIComponent(
     `Merhaba, Ocak Turizm'den bilgi almak istiyorum.\n\nAd: ${form.name}\nDestinasyon: ${form.destination}\nTarih: ${form.date}\nKisi Sayisi: ${form.people}\nMesaj: ${form.message}`
   );
-  const whatsappLink = `https://wa.me/905551234567?text=${whatsappMessage}`;
+  const whatsappLink = `https://wa.me/${whatsapp}?text=${whatsappMessage}`;
 
   const inputClasses = "w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all text-sm bg-white";
 
@@ -40,7 +50,6 @@ export default function ReservationForm() {
     <section id="rezervasyon" className="py-16 lg:py-20 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {/* Left - Info */}
           <div className="flex flex-col justify-center">
             <h2 className="text-2xl sm:text-3xl font-heading font-bold text-primary mb-3">
               Iletisim
@@ -52,9 +61,9 @@ export default function ReservationForm() {
 
             <div className="space-y-4">
               {[
-                { icon: HiPhone, label: "Telefon", value: "+90 555 123 4567" },
-                { icon: HiMail, label: "E-posta", value: "info@ocakturizm.com" },
-                { icon: HiLocationMarker, label: "Adres", value: "Istanbul, Turkiye" },
+                { icon: HiPhone, label: "Telefon", value: phone },
+                { icon: HiMail, label: "E-posta", value: email },
+                { icon: HiLocationMarker, label: "Adres", value: address },
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shrink-0">
@@ -79,7 +88,6 @@ export default function ReservationForm() {
             </a>
           </div>
 
-          {/* Right - Form */}
           <div>
             {submitted ? (
               <div className="bg-white rounded-2xl p-10 text-center shadow-sm border border-gray-100">
