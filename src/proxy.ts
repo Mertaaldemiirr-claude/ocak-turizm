@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 const SITE_PASSWORD = "ocak2026";
 const COOKIE_NAME = "site-auth";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // /studio yolunu koruma dışında tut (Sanity Studio)
   if (request.nextUrl.pathname.startsWith("/studio")) {
     return NextResponse.next();
