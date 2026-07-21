@@ -29,7 +29,7 @@ export default function Hero({ settings }: Props) {
   const touchEndX = useRef(0);
   const router = useRouter();
 
-  const tagline = settings?.heroTagline || "Güvenle keşfedin, huzurla seyahat edin.";
+  const tagline = settings?.heroTagline || "Her yolculukta, önce âdem…";
   const title = settings?.heroTitle || "Ailenizle birlikte unutulmaz rotalar keşfedin";
   const subtitle = settings?.heroSubtitle || "Özenle planlanmış turlar ile kültür, tarih ve doğayı bir arada yaşayın.";
 
