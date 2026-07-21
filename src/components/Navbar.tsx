@@ -5,21 +5,27 @@ import { useRouter } from "next/navigation";
 import { FaWhatsapp, FaInstagram, FaFacebookF, FaPhoneAlt } from "react-icons/fa";
 import { HiMenu, HiX, HiSearch } from "react-icons/hi";
 import type { SiteSettings } from "@/sanity/lib/types";
-
-const navLinks = [
-  { name: "Ana Sayfa", href: "/" },
-  { name: "Turlar", href: "/turlar" },
-  { name: "Hakkimizda", href: "/hakkimizda" },
-  { name: "Galeri", href: "/galeri" },
-  { name: "Blog", href: "/blog" },
-  { name: "Iletisim", href: "/iletisim" },
-];
+import { useTranslation, useLocalePath } from "./LocaleProvider";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 interface Props {
   settings: SiteSettings | null;
 }
 
 export default function Navbar({ settings }: Props) {
+  const { dict } = useTranslation();
+  const lp = useLocalePath();
+  const t = dict.nav;
+
+  const navLinks = [
+    { name: t.home, href: lp("/") },
+    { name: t.tours, href: lp("/turlar") },
+    { name: t.about, href: lp("/hakkimizda") },
+    { name: t.gallery, href: lp("/galeri") },
+    { name: t.blog, href: lp("/blog") },
+    { name: t.contact, href: lp("/iletisim") },
+  ];
+
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -61,7 +67,7 @@ export default function Navbar({ settings }: Props) {
 
       <nav className="bg-white border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
-          <a href="#anasayfa" className="font-heading font-bold text-xl text-primary">
+          <a href={lp("/")} className="font-heading font-bold text-xl text-primary">
             Ocak<span className="text-gold ml-0.5">.</span>
             <span className="text-xs font-normal text-gray-400 ml-1 tracking-widest uppercase">Turizm</span>
           </a>
@@ -81,7 +87,7 @@ export default function Navbar({ settings }: Props) {
                   onSubmit={(e) => {
                     e.preventDefault();
                     if (searchTerm.trim()) {
-                      router.push(`/turlar?q=${encodeURIComponent(searchTerm.trim())}`);
+                      router.push(`${lp("/turlar")}?q=${encodeURIComponent(searchTerm.trim())}`);
                       setSearchOpen(false);
                       setSearchTerm("");
                     }
@@ -92,7 +98,7 @@ export default function Navbar({ settings }: Props) {
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Tur ara..."
+                    placeholder={t.searchPlaceholder}
                     autoFocus
                     onBlur={() => {
                       if (!searchTerm.trim()) setSearchOpen(false);
@@ -104,19 +110,23 @@ export default function Navbar({ settings }: Props) {
               <button
                 onClick={() => setSearchOpen(!searchOpen)}
                 className="text-gray-500 hover:text-primary p-2 transition-colors"
-                aria-label="Ara"
+                aria-label="Search"
               >
                 <HiSearch className="text-lg" />
               </button>
             </div>
+            <LanguageSwitcher />
             <a href="#rezervasyon" className="ml-1 bg-primary hover:bg-gold text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">
-              Tur Talebi
+              {t.tourRequest}
             </a>
           </div>
 
-          <button className="lg:hidden text-primary text-2xl p-1" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Menu">
-            {mobileOpen ? <HiX /> : <HiMenu />}
-          </button>
+          <div className="lg:hidden flex items-center gap-2">
+            <LanguageSwitcher />
+            <button className="text-primary text-2xl p-1" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Menu">
+              {mobileOpen ? <HiX /> : <HiMenu />}
+            </button>
+          </div>
         </div>
 
         {mobileOpen && (
@@ -128,7 +138,7 @@ export default function Navbar({ settings }: Props) {
                 </a>
               ))}
               <a href="#rezervasyon" onClick={() => setMobileOpen(false)} className="bg-primary text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center mt-2 hover:bg-gold transition-colors">
-                Tur Talebi Olustur
+                {t.tourRequest}
               </a>
             </div>
           </div>

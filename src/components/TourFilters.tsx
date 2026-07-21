@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslation, useLocalePath } from "./LocaleProvider";
 
 interface Tour {
   _id: string;
@@ -29,6 +30,9 @@ interface Props {
 }
 
 export default function TourFilters({ tours, destinations }: Props) {
+  const { dict } = useTranslation();
+  const t = dict.tourFilters;
+  const lp = useLocalePath();
   const [activeFilter, setActiveFilter] = useState<string>("all");
 
   const filtered =
@@ -38,7 +42,7 @@ export default function TourFilters({ tours, destinations }: Props) {
 
   return (
     <>
-      {/* Filtre butonlari */}
+      {/* Filtre butonları */}
       <div className="flex flex-wrap gap-2 mb-8">
         <button
           onClick={() => setActiveFilter("all")}
@@ -48,7 +52,7 @@ export default function TourFilters({ tours, destinations }: Props) {
               : "bg-white text-gray-600 border border-gray-200 hover:border-primary hover:text-primary"
           }`}
         >
-          Tumu ({tours.length})
+          {t.all} ({tours.length})
         </button>
         {destinations.map((dest) => (
           <button
@@ -65,17 +69,17 @@ export default function TourFilters({ tours, destinations }: Props) {
         ))}
       </div>
 
-      {/* Tur kartlari */}
+      {/* Tur kartları */}
       {filtered.length === 0 ? (
         <div className="text-center py-20">
-          <p className="text-gray-400 text-sm">Bu kategoride tur bulunamadi.</p>
+          <p className="text-gray-400 text-sm">{t.noTours}</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((tour) => (
             <Link
               key={tour._id}
-              href={`/turlar/${tour.slug.current}`}
+              href={lp(`/turlar/${tour.slug.current}`)}
               className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-200 border border-gray-100"
             >
               <div className="relative h-52 overflow-hidden bg-gray-200">
@@ -89,11 +93,11 @@ export default function TourFilters({ tours, destinations }: Props) {
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-gray-300 text-sm">
-                    Gorsel yok
+                    {t.noImage}
                   </div>
                 )}
                 <div className="absolute top-3 left-3 bg-primary/90 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                  {tour.days} Gun
+                  {tour.days} {t.days}
                 </div>
                 {tour.destination && (
                   <div className="absolute top-3 right-3 bg-white/90 text-primary text-xs font-semibold px-3 py-1 rounded-full">

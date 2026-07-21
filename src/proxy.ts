@@ -3,40 +3,63 @@ import { NextRequest, NextResponse } from "next/server";
 const SITE_PASSWORD = "ocak2026";
 const COOKIE_NAME = "site-auth";
 
+const locales = ["tr", "en", "de", "fr", "es"];
+const defaultLocale = "tr";
+
+function getLocale(request: NextRequest): string {
+  const acceptLang = request.headers.get("accept-language") || "";
+  for (const locale of locales) {
+    if (acceptLang.toLowerCase().includes(locale)) return locale;
+  }
+  return defaultLocale;
+}
+
 export function proxy(request: NextRequest) {
-  // /studio yolunu koruma dışında tut (Sanity Studio)
-  if (request.nextUrl.pathname.startsWith("/studio")) {
-    return NextResponse.next();
-  }
+  const { pathname } = request.nextUrl;
 
-  // API rotalarını koruma dışında tut
-  if (request.nextUrl.pathname.startsWith("/api")) {
-    return NextResponse.next();
-  }
-
-  // Statik dosyaları koruma dışında tut
+  // Skip internal paths, static files
   if (
-    request.nextUrl.pathname.startsWith("/_next") ||
-    request.nextUrl.pathname.startsWith("/favicon") ||
-    request.nextUrl.pathname.match(/\.(ico|png|jpg|jpeg|svg|webp|gif|css|js)$/)
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/favicon") ||
+    pathname.startsWith("/images") ||
+    pathname.match(/\.(ico|png|jpg|jpeg|svg|webp|gif|css|js|mp4)$/)
   ) {
     return NextResponse.next();
   }
 
-  // Parola gönderilmişse kontrol et
-  if (request.method === "POST" && request.nextUrl.pathname === "/giris") {
+  // Skip /studio (Sanity Studio)
+  if (pathname.startsWith("/studio")) {
     return NextResponse.next();
   }
 
-  // Cookie varsa geç
+  // Skip /api routes
+  if (pathname.startsWith("/api")) {
+    return NextResponse.next();
+  }
+
+  // Skip /giris (login page - outside locale)
+  if (pathname === "/giris") {
+    return NextResponse.next();
+  }
+
+  // Auth check: if no cookie, rewrite to /giris
   const authCookie = request.cookies.get(COOKIE_NAME);
-  if (authCookie?.value === "true") {
-    return NextResponse.next();
+  if (authCookie?.value !== "true") {
+    const loginUrl = new URL("/giris", request.url);
+    return NextResponse.rewrite(loginUrl);
   }
 
-  // Giriş sayfasına yönlendir
-  const loginUrl = new URL("/giris", request.url);
-  return NextResponse.rewrite(loginUrl);
+  // Locale routing: check if pathname already has a locale prefix
+  const pathnameHasLocale = locales.some(
+    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+  );
+
+  if (pathnameHasLocale) return NextResponse.next();
+
+  // Redirect to locale-prefixed path
+  const locale = getLocale(request);
+  request.nextUrl.pathname = `/${locale}${pathname}`;
+  return NextResponse.redirect(request.nextUrl);
 }
 
 export const config = {

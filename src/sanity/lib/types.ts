@@ -11,6 +11,7 @@ export interface Tour {
   singlePrice?: number
   childPrice?: number
   infantPrice?: number
+  currency?: string
   groupSize?: number
   date: string
   cities: string

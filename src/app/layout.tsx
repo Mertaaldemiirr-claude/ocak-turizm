@@ -15,10 +15,10 @@ const raleway = Raleway({
 });
 
 export const metadata: Metadata = {
-  title: "Ocak Turizm | Kesfet. Deneyimle. Hatirla.",
+  title: "Ocak Turizm | Keşfet. Deneyimle. Hatırla.",
   description:
-    "Ocak Turizm ile unutulmaz tatiller, ozel rotalar ve size ozel deneyimler. Misir, Fas, Ozbekistan ve Bosna Hersek turlari.",
-  keywords: "turizm, tur, seyahat, misir, fas, ozbekistan, bosna hersek, tatil",
+    "Ocak Turizm ile unutulmaz tatiller, özel rotalar ve size özel deneyimler. Mısır, Fas, Özbekistan ve Bosna Hersek turları.",
+  keywords: "turizm, tur, seyahat, mısır, fas, özbekistan, bosna hersek, tatil",
 };
 
 export default function RootLayout({
@@ -27,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr" className={`${poppins.variable} ${raleway.variable}`}>
+    <html className={`${poppins.variable} ${raleway.variable}`}>
       <body className="min-h-screen flex flex-col antialiased">{children}</body>
     </html>
   );

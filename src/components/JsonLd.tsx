@@ -10,13 +10,13 @@ export function TravelAgencyJsonLd({ settings }: TravelAgencyProps) {
     "@type": "TravelAgency",
     name: "Ocak Turizm",
     description:
-      "Islami degerlere uygun, helal konaklama ve namaz duzenli tur organizasyonlari.",
-    url: "https://ocak-turizm.vercel.app",
-    telephone: settings?.phone || "+90 555 123 4567",
+      "İslami değerlere uygun, helal konaklama ve namaz düzenli tur organizasyonları.",
+    url: "https://ocakturizm.com",
+    telephone: settings?.phone || "+90 555 013 0571",
     email: settings?.email || "info@ocakturizm.com",
     address: {
       "@type": "PostalAddress",
-      addressLocality: settings?.address || "Istanbul, Turkiye",
+      addressLocality: settings?.address || "İstanbul, Türkiye",
       addressCountry: "TR",
     },
     sameAs: [
@@ -72,20 +72,20 @@ export function TourJsonLd({ tour }: TourJsonLdProps) {
     touristType: "Families",
     itinerary: tour.program?.map((p) => ({
       "@type": "ItemList",
-      name: `Gun ${p.day}: ${p.title}`,
+      name: `Gün ${p.day}: ${p.title}`,
       description: p.details,
     })),
     offers: {
       "@type": "Offer",
       price: tour.price,
-      priceCurrency: "TRY",
+      priceCurrency: tour.currency || "EUR",
       availability: "https://schema.org/InStock",
     },
     image: tour.imageUrl || undefined,
     provider: {
       "@type": "TravelAgency",
       name: "Ocak Turizm",
-      url: "https://ocak-turizm.vercel.app",
+      url: "https://ocakturizm.com",
     },
   };
 

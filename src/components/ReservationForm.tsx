@@ -4,17 +4,20 @@ import { useState } from "react";
 import { HiPhone, HiMail, HiLocationMarker } from "react-icons/hi";
 import { FaWhatsapp } from "react-icons/fa";
 import type { SiteSettings } from "@/sanity/lib/types";
+import { useTranslation } from "./LocaleProvider";
 
-const destinations = ["Misir", "Fas", "Ozbekistan", "Bosna Hersek"];
+const destinations = ["Mısır", "Fas", "Özbekistan", "Bosna Hersek"];
 
 interface Props {
   settings: SiteSettings | null;
 }
 
 export default function ReservationForm({ settings }: Props) {
+  const { dict } = useTranslation();
+  const t = dict.reservation;
   const phone = settings?.phone || "+90 555 123 4567";
   const email = settings?.email || "info@ocakturizm.com";
-  const address = settings?.address || "Istanbul, Turkiye";
+  const address = settings?.address || "İstanbul, Türkiye";
   const whatsapp = settings?.whatsapp || "905551234567";
 
   const [form, setForm] = useState({
@@ -40,7 +43,7 @@ export default function ReservationForm({ settings }: Props) {
   };
 
   const whatsappMessage = encodeURIComponent(
-    `Merhaba, Ocak Turizm'den bilgi almak istiyorum.\n\nAd: ${form.name}\nDestinasyon: ${form.destination}\nTarih: ${form.date}\nKisi Sayisi: ${form.people}\nMesaj: ${form.message}`
+    `${t.whatsappMessage}\n\n${t.name}: ${form.name}\n${t.destination}: ${form.destination}\n${t.date}: ${form.date}\n${t.people}: ${form.people}\n${t.message}: ${form.message}`
   );
   const whatsappLink = `https://wa.me/${whatsapp}?text=${whatsappMessage}`;
 
@@ -52,18 +55,17 @@ export default function ReservationForm({ settings }: Props) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div className="flex flex-col justify-center">
             <h2 className="text-2xl sm:text-3xl font-heading font-bold text-primary mb-3">
-              Iletisim
+              {t.title}
             </h2>
             <p className="text-gray-500 text-sm mb-8 leading-relaxed">
-              Formu doldurun veya WhatsApp uzerinden bize ulasin.
-              En kisa surede size donecegiz.
+              {t.subtitle}
             </p>
 
             <div className="space-y-4">
               {[
-                { icon: HiPhone, label: "Telefon", value: phone },
-                { icon: HiMail, label: "E-posta", value: email },
-                { icon: HiLocationMarker, label: "Adres", value: address },
+                { icon: HiPhone, label: t.phone, value: phone },
+                { icon: HiMail, label: t.email, value: email },
+                { icon: HiLocationMarker, label: t.address, value: address },
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shrink-0">
@@ -84,7 +86,7 @@ export default function ReservationForm({ settings }: Props) {
               className="mt-8 inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-semibold px-6 py-3 rounded-lg transition-colors text-sm w-fit"
             >
               <FaWhatsapp className="text-xl" />
-              WhatsApp ile Ulasin
+              {t.whatsappCta}
             </a>
           </div>
 
@@ -96,58 +98,58 @@ export default function ReservationForm({ settings }: Props) {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h3 className="font-heading font-bold text-xl text-primary mb-2">Talebiniz Alindi!</h3>
-                <p className="text-gray-500 text-sm mb-6">En kisa surede sizinle iletisime gececegiz.</p>
+                <h3 className="font-heading font-bold text-xl text-primary mb-2">{t.successTitle}</h3>
+                <p className="text-gray-500 text-sm mb-6">{t.successMessage}</p>
                 <button onClick={() => setSubmitted(false)} className="text-gold hover:underline text-sm font-semibold">
-                  Yeni Talep Olustur
+                  {t.newRequest}
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-6 sm:p-8 space-y-4 shadow-sm border border-gray-100">
-                <h3 className="font-heading font-bold text-lg text-primary mb-1">Tur Talebi Olustur</h3>
-                <p className="text-gray-400 text-xs mb-3">Bilgilerinizi birakin, sizi arayalim</p>
+                <h3 className="font-heading font-bold text-lg text-primary mb-1">{t.formTitle}</h3>
+                <p className="text-gray-400 text-xs mb-3">{t.formSubtitle}</p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-gray-500 mb-1">Ad Soyad *</label>
-                    <input type="text" name="name" required value={form.name} onChange={handleChange} className={inputClasses} placeholder="Adiniz Soyadiniz" />
+                    <label className="block text-xs font-medium text-gray-500 mb-1">{t.name} *</label>
+                    <input type="text" name="name" required value={form.name} onChange={handleChange} className={inputClasses} />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-500 mb-1">Telefon *</label>
-                    <input type="tel" name="phone" required value={form.phone} onChange={handleChange} className={inputClasses} placeholder="0555 123 4567" />
+                    <label className="block text-xs font-medium text-gray-500 mb-1">{t.phone} *</label>
+                    <input type="tel" name="phone" required value={form.phone} onChange={handleChange} className={inputClasses} placeholder={t.phonePlaceholder} />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-gray-500 mb-1">E-posta</label>
-                  <input type="email" name="email" value={form.email} onChange={handleChange} className={inputClasses} placeholder="ornek@email.com" />
+                  <label className="block text-xs font-medium text-gray-500 mb-1">{t.email}</label>
+                  <input type="email" name="email" value={form.email} onChange={handleChange} className={inputClasses} placeholder={t.emailPlaceholder} />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-gray-500 mb-1">Destinasyon *</label>
+                    <label className="block text-xs font-medium text-gray-500 mb-1">{t.destination} *</label>
                     <select name="destination" required value={form.destination} onChange={handleChange} className={inputClasses}>
-                      <option value="">Secin</option>
+                      <option value="">{t.select}</option>
                       {destinations.map((d) => (<option key={d} value={d}>{d}</option>))}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-500 mb-1">Tarih</label>
+                    <label className="block text-xs font-medium text-gray-500 mb-1">{t.date}</label>
                     <input type="date" name="date" value={form.date} onChange={handleChange} className={inputClasses} />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-500 mb-1">Kisi Sayisi</label>
-                    <input type="number" name="people" min="1" value={form.people} onChange={handleChange} className={inputClasses} placeholder="Kac kisi?" />
+                    <label className="block text-xs font-medium text-gray-500 mb-1">{t.people}</label>
+                    <input type="number" name="people" min="1" value={form.people} onChange={handleChange} className={inputClasses} placeholder={t.peoplePlaceholder} />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-gray-500 mb-1">Mesajiniz</label>
-                  <textarea name="message" rows={3} value={form.message} onChange={handleChange} className={`${inputClasses} resize-none`} placeholder="Ozel istekleriniz..." />
+                  <label className="block text-xs font-medium text-gray-500 mb-1">{t.message}</label>
+                  <textarea name="message" rows={3} value={form.message} onChange={handleChange} className={`${inputClasses} resize-none`} placeholder={t.messagePlaceholder} />
                 </div>
 
                 <button type="submit" className="w-full bg-primary hover:bg-gold text-white font-heading font-semibold py-3 rounded-lg transition-colors text-sm">
-                  Tur Talebi Gonder
+                  {t.submit}
                 </button>
               </form>
             )}

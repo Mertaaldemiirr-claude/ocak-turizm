@@ -1,11 +1,18 @@
+"use client";
+
 import Image from "next/image";
 import type { BlogPost } from "@/sanity/lib/types";
+import { useTranslation, useLocalePath } from "./LocaleProvider";
 
 interface Props {
   posts: BlogPost[];
 }
 
 export default function BlogPreview({ posts }: Props) {
+  const { dict, locale } = useTranslation();
+  const t = dict.blogPreview;
+  const lp = useLocalePath();
+
   if (!posts || posts.length === 0) return null;
 
   const displayPosts = posts.slice(0, 3);
@@ -15,10 +22,10 @@ export default function BlogPreview({ posts }: Props) {
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-10">
           <h2 className="text-2xl sm:text-3xl font-heading font-bold text-primary mb-2">
-            Blog Yazilari
+            {t.title}
           </h2>
           <p className="text-gray-500 text-sm">
-            Seyahat rehberleri ve ilham veren yazilar
+            {t.subtitle}
           </p>
         </div>
 
@@ -26,7 +33,7 @@ export default function BlogPreview({ posts }: Props) {
           {displayPosts.map((post) => (
             <a
               key={post._id}
-              href={`/blog/${post.slug.current}`}
+              href={lp(`/blog/${post.slug.current}`)}
               className="group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:-translate-y-1 hover:shadow-md transition-all duration-200"
             >
               <div className="relative h-48 bg-gray-100">
@@ -54,7 +61,7 @@ export default function BlogPreview({ posts }: Props) {
 
               <div className="p-5">
                 <p className="text-gray-400 text-xs mb-2">
-                  {new Date(post.publishedAt).toLocaleDateString("tr-TR", {
+                  {new Date(post.publishedAt).toLocaleDateString(locale, {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
@@ -69,7 +76,7 @@ export default function BlogPreview({ posts }: Props) {
                   </p>
                 )}
                 <span className="text-gold text-xs font-semibold group-hover:underline">
-                  Devamini Oku &rarr;
+                  {t.readMore} &rarr;
                 </span>
               </div>
             </a>
@@ -78,10 +85,10 @@ export default function BlogPreview({ posts }: Props) {
 
         <div className="text-center mt-10">
           <a
-            href="/blog"
+            href={lp("/blog")}
             className="inline-block border border-primary text-primary hover:bg-primary hover:text-white text-sm font-semibold px-6 py-2.5 rounded-lg transition-colors"
           >
-            Tum Yazilari Gor
+            {t.viewAll}
           </a>
         </div>
       </div>

@@ -79,10 +79,23 @@ export const tour = defineType({
       type: 'number',
     }),
     defineField({
+      name: 'currency',
+      title: 'Para Birimi',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'EUR (€)', value: 'EUR' },
+          { title: 'USD ($)', value: 'USD' },
+          { title: 'TRY (₺)', value: 'TRY' },
+        ],
+      },
+      initialValue: 'EUR',
+    }),
+    defineField({
       name: 'groupSize',
-      title: 'Maksimum Grup Buyuklugu',
+      title: 'Maksimum Grup Büyüklüğü',
       type: 'number',
-      description: 'Ornek: 8',
+      description: 'Örnek: 8',
     }),
     defineField({
       name: 'date',

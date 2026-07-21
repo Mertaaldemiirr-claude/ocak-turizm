@@ -2,30 +2,35 @@
 
 import { FaWhatsapp, FaInstagram, FaFacebookF } from "react-icons/fa";
 import type { SiteSettings } from "@/sanity/lib/types";
-
-const quickLinks = [
-  { name: "Ana Sayfa", href: "/" },
-  { name: "Turlar", href: "/turlar" },
-  { name: "Tur Talebi", href: "/ozel-tur-talebi" },
-  { name: "Hakkimizda", href: "/hakkimizda" },
-  { name: "Iletisim", href: "/iletisim" },
-];
-
-const destinationLinks = [
-  { name: "Misir Turlari", href: "/turlar?destinasyon=misir" },
-  { name: "Fas Turlari", href: "/turlar?destinasyon=fas" },
-  { name: "Ozbekistan Turlari", href: "/turlar?destinasyon=ozbekistan" },
-  { name: "Bosna Hersek Turlari", href: "/turlar?destinasyon=bosna-hersek" },
-];
+import { useTranslation, useLocalePath } from "./LocaleProvider";
 
 interface Props {
   settings: SiteSettings | null;
 }
 
 export default function Footer({ settings }: Props) {
+  const { dict } = useTranslation();
+  const lp = useLocalePath();
+  const t = dict.footer;
+
+  const quickLinks = [
+    { name: dict.nav.home, href: lp("/") },
+    { name: dict.nav.tours, href: lp("/turlar") },
+    { name: t.tourRequest, href: lp("/ozel-tur-talebi") },
+    { name: dict.nav.about, href: lp("/hakkimizda") },
+    { name: dict.nav.contact, href: lp("/iletisim") },
+  ];
+
+  const destinationLinks = [
+    { name: "Mısır", href: lp("/turlar?destinasyon=misir") },
+    { name: "Fas", href: lp("/turlar?destinasyon=fas") },
+    { name: "Özbekistan", href: lp("/turlar?destinasyon=ozbekistan") },
+    { name: "Bosna Hersek", href: lp("/turlar?destinasyon=bosna-hersek") },
+  ];
+
   const phone = settings?.phone || "+90 555 123 4567";
   const email = settings?.email || "info@ocakturizm.com";
-  const address = settings?.address || "Istanbul, Turkiye";
+  const address = settings?.address || "İstanbul, Türkiye";
   const whatsapp = settings?.whatsapp || "905551234567";
   const instagram = settings?.instagram || "#";
   const facebook = settings?.facebook || "#";
@@ -41,8 +46,7 @@ export default function Footer({ settings }: Props) {
               <span className="text-xs font-normal text-white/50 ml-1 tracking-widest uppercase">Turizm</span>
             </div>
             <p className="text-white/50 text-sm leading-relaxed mb-5">
-              Islami degerlere uygun, helal konaklama ve namaz duzenli
-              tur organizasyonlari ile gonul rahatligiyla seyahat edin.
+              {t.description}
             </p>
             <div className="flex gap-3">
               {[
@@ -58,7 +62,7 @@ export default function Footer({ settings }: Props) {
           </div>
 
           <div>
-            <h4 className="font-heading font-semibold text-sm mb-4">Hizli Linkler</h4>
+            <h4 className="font-heading font-semibold text-sm mb-4">{t.quickLinks}</h4>
             <ul className="space-y-2.5">
               {quickLinks.map((link) => (
                 <li key={link.name}>
@@ -69,7 +73,7 @@ export default function Footer({ settings }: Props) {
           </div>
 
           <div>
-            <h4 className="font-heading font-semibold text-sm mb-4">Ulkeler</h4>
+            <h4 className="font-heading font-semibold text-sm mb-4">{t.countries}</h4>
             <ul className="space-y-2.5">
               {destinationLinks.map((dest) => (
                 <li key={dest.name}>
@@ -80,7 +84,7 @@ export default function Footer({ settings }: Props) {
           </div>
 
           <div>
-            <h4 className="font-heading font-semibold text-sm mb-4">Iletisim</h4>
+            <h4 className="font-heading font-semibold text-sm mb-4">{t.contact}</h4>
             <div className="space-y-2.5 text-white/50 text-sm">
               <p>{phone}</p>
               <p>{email}</p>
@@ -92,14 +96,14 @@ export default function Footer({ settings }: Props) {
 
         <div className="border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-white/30 text-xs">
-            &copy; {new Date().getFullYear()} Ocak Turizm. Tum haklari saklidir.
+            &copy; {new Date().getFullYear()} Ocak Turizm. {t.rights}
           </p>
           <div className="flex gap-4">
-            <a href="/gizlilik-politikasi" className="text-white/30 hover:text-gold text-xs transition-colors">
-              Gizlilik Politikasi
+            <a href={lp("/gizlilik-politikasi")} className="text-white/30 hover:text-gold text-xs transition-colors">
+              {t.privacy}
             </a>
-            <a href="/iade-politikasi" className="text-white/30 hover:text-gold text-xs transition-colors">
-              Iade Politikasi
+            <a href={lp("/iade-politikasi")} className="text-white/30 hover:text-gold text-xs transition-colors">
+              {t.refund}
             </a>
           </div>
         </div>

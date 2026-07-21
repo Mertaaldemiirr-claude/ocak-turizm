@@ -9,6 +9,7 @@ export const toursQuery = groq`
     days,
     price,
     oldPrice,
+    currency,
     date,
     cities,
     description,
@@ -51,6 +52,7 @@ export const tourDetailQuery = groq`
     singlePrice,
     childPrice,
     infantPrice,
+    currency,
     groupSize,
     date,
     cities,
@@ -75,6 +77,7 @@ export const relatedToursQuery = groq`
     days,
     price,
     oldPrice,
+    currency,
     date,
     cities
   }

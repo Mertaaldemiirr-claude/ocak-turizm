@@ -72,7 +72,7 @@ export function createPaytrToken(params: PaytrPaymentParams) {
     lang,
     user_name: params.customerName,
     user_phone: params.customerPhone,
-    user_address: params.customerAddress || 'Turkiye',
+    user_address: params.customerAddress || 'Türkiye',
     merchant_ok_url: successUrl,
     merchant_fail_url: failUrl,
   }

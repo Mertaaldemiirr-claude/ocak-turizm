@@ -3,12 +3,15 @@
 import { useState } from "react";
 import { HiChevronDown } from "react-icons/hi";
 import type { FAQ as FAQType } from "@/sanity/lib/types";
+import { useTranslation } from "./LocaleProvider";
 
 interface Props {
   faqs: FAQType[];
 }
 
 export default function FAQ({ faqs }: Props) {
+  const { dict } = useTranslation();
+  const t = dict.faq;
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
@@ -16,10 +19,10 @@ export default function FAQ({ faqs }: Props) {
       <div className="max-w-3xl mx-auto px-4">
         <div className="text-center mb-10">
           <h2 className="text-2xl sm:text-3xl font-heading font-bold text-primary mb-2">
-            Sikca Sorulan Sorular
+            {t.title}
           </h2>
           <p className="text-gray-500 text-sm">
-            Merak ettiginiz sorularin cevaplari
+            {t.subtitle}
           </p>
         </div>
 

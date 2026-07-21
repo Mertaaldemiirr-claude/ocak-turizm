@@ -68,7 +68,7 @@ export default function GirisPage() {
             marginBottom: "32px",
           }}
         >
-          Site yapim asamasindadir. Erisim icin parola gereklidir.
+          Site yapım aşamasındadır. Erişim için parola gereklidir.
         </p>
         <form onSubmit={handleSubmit}>
           <input
@@ -90,7 +90,7 @@ export default function GirisPage() {
           />
           {error && (
             <p style={{ color: "#e74c3c", fontSize: "13px", margin: "0 0 12px" }}>
-              Yanlis parola. Tekrar deneyin.
+              Yanlış parola. Tekrar deneyin.
             </p>
           )}
           <button
@@ -109,7 +109,7 @@ export default function GirisPage() {
               marginTop: "8px",
             }}
           >
-            {loading ? "Kontrol ediliyor..." : "Giris Yap"}
+            {loading ? "Kontrol ediliyor..." : "Giriş Yap"}
           </button>
         </form>
       </div>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { HiStar, HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import type { Testimonial } from "@/sanity/lib/types";
+import { useTranslation } from "./LocaleProvider";
 
 interface Props {
   testimonials: Testimonial[];
@@ -18,6 +19,8 @@ function getInitials(name: string): string {
 }
 
 export default function Testimonials({ testimonials }: Props) {
+  const { dict } = useTranslation();
+  const tr = dict.testimonials;
   const [page, setPage] = useState(0);
   const perPage = 3;
   const totalPages = Math.ceil(testimonials.length / perPage);
@@ -28,7 +31,7 @@ export default function Testimonials({ testimonials }: Props) {
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-10">
           <h2 className="text-2xl sm:text-3xl font-heading font-bold text-primary mb-2">
-            Musterilerimiz Ne Diyor?
+            {tr.title}
           </h2>
           <div className="flex items-center justify-center gap-2 mb-1">
             {[...Array(5)].map((_, i) => (
@@ -37,7 +40,7 @@ export default function Testimonials({ testimonials }: Props) {
             <span className="font-heading font-bold text-primary ml-1">5.0</span>
           </div>
           <p className="text-gray-500 text-sm">
-            Ailelerden gelen gercek deneyimler
+            {tr.subtitle}
           </p>
         </div>
 
