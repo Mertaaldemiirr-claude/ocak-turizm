@@ -7,6 +7,8 @@ import { blogPostsQuery, siteSettingsQuery } from "@/sanity/lib/queries";
 import { getDictionary, type Locale } from "../dictionaries";
 import { translateBlogPosts } from "@/lib/translateContent";
 
+export const revalidate = 60;
+
 interface BlogPost {
   _id: string;
   title: string;

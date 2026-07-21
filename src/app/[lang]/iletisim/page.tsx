@@ -7,6 +7,8 @@ import { HiPhone, HiMail, HiLocationMarker, HiClock } from "react-icons/hi";
 import { FaWhatsapp } from "react-icons/fa";
 import { getDictionary, type Locale } from "../dictionaries";
 
+export const revalidate = 60;
+
 export default async function IletisimPage({
   params,
 }: {

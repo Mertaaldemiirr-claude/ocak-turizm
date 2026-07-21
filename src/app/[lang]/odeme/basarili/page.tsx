@@ -5,6 +5,8 @@ import { client } from "@/sanity/lib/client";
 import { siteSettingsQuery } from "@/sanity/lib/queries";
 import { getDictionary, type Locale } from "../../dictionaries";
 
+export const revalidate = 60;
+
 export default async function PaymentSuccess({
   params,
 }: {

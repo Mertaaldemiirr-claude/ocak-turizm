@@ -6,6 +6,8 @@ import { siteSettingsQuery } from "@/sanity/lib/queries";
 import { groq } from "next-sanity";
 import { getDictionary, type Locale } from "../dictionaries";
 
+export const revalidate = 60;
+
 const galleryQuery = groq`
   *[_type == "galleryImage"] | order(order asc) {
     _id,

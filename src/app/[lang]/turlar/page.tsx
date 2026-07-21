@@ -9,6 +9,8 @@ import TourFilters from "@/components/TourFilters";
 import { getDictionary, type Locale } from "../dictionaries";
 import { translateTours, translateDestinations } from "@/lib/translateContent";
 
+export const revalidate = 60;
+
 export default async function TurlarPage({
   params,
 }: {

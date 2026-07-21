@@ -8,6 +8,8 @@ import { blogPostQuery, siteSettingsQuery } from "@/sanity/lib/queries";
 import { PortableText } from "next-sanity";
 import { getDictionary, type Locale } from "../../dictionaries";
 
+export const revalidate = 60;
+
 const categoryLabels: Record<string, string> = {
   rehber: "Seyahat Rehberi",
   kultur: "Kultur",

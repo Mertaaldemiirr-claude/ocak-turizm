@@ -12,6 +12,8 @@ import type { Tour } from "@/sanity/lib/types";
 import { getDictionary, type Locale } from "../../dictionaries";
 import { translateTourDetail, translateTours } from "@/lib/translateContent";
 
+export const revalidate = 60;
+
 interface RelatedTour {
   _id: string;
   name: string;
