@@ -63,8 +63,20 @@ export const tourDetailQuery = groq`
     importantNotes,
     tourFaq,
     "tourFileUrl": tourFile.asset->url,
+    tourGroup,
     featured,
     destination-> { _id, name, slug, flag }
+  }
+`
+
+export const otherDatesQuery = groq`
+  *[_type == "tour" && tourGroup == $tourGroup && slug.current != $slug] | order(date asc) {
+    _id,
+    name,
+    slug,
+    date,
+    price,
+    currency
   }
 `
 

@@ -22,6 +22,7 @@ export interface Tour {
   importantNotes?: string[]
   tourFaq?: { question: string; answer: string }[]
   tourFileUrl?: string
+  tourGroup?: string
   featured?: boolean
   destination?: { _id: string; name: string; slug: { current: string }; flag: string }
 }

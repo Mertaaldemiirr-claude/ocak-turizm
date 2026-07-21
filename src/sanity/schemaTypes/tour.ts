@@ -170,6 +170,12 @@ export const tour = defineType({
       description: 'Indirilebilir tur programi PDF dosyasi',
     }),
     defineField({
+      name: 'tourGroup',
+      title: 'Tur Grubu',
+      type: 'string',
+      description: 'Ayni rotanin farkli tarihlerini gruplamak icin (ornek: buyuk-misir-turu)',
+    }),
+    defineField({
       name: 'featured',
       title: 'One Cikan Tur',
       type: 'boolean',

@@ -7,7 +7,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import TourGallery from "@/components/TourGallery";
 import TourDetailClient from "@/components/TourDetailClient";
 import { client } from "@/sanity/lib/client";
-import { siteSettingsQuery, tourDetailQuery, relatedToursQuery } from "@/sanity/lib/queries";
+import { siteSettingsQuery, tourDetailQuery, relatedToursQuery, otherDatesQuery } from "@/sanity/lib/queries";
 import type { Tour } from "@/sanity/lib/types";
 import { getDictionary, type Locale } from "../../dictionaries";
 import { translateTourDetail, translateTours } from "@/lib/translateContent";
@@ -42,12 +42,20 @@ export default async function TurDetayPage({
 
   if (!tourRaw) notFound();
 
-  const relatedToursRaw = tourRaw.destination
-    ? await client.fetch<RelatedTour[]>(relatedToursQuery, {
-        slug,
-        destSlug: tourRaw.destination.slug.current,
-      })
-    : [];
+  const [relatedToursRaw, otherDates] = await Promise.all([
+    tourRaw.destination
+      ? client.fetch<RelatedTour[]>(relatedToursQuery, {
+          slug,
+          destSlug: tourRaw.destination.slug.current,
+        })
+      : Promise.resolve([]),
+    tourRaw.tourGroup
+      ? client.fetch<{ _id: string; name: string; slug: { current: string }; date: string; price: number; currency?: string }[]>(
+          otherDatesQuery,
+          { tourGroup: tourRaw.tourGroup, slug }
+        )
+      : Promise.resolve([]),
+  ]);
 
   const [tour, relatedTours] = await Promise.all([
     translateTourDetail(tourRaw, lang),
@@ -194,14 +202,12 @@ export default async function TurDetayPage({
 
                   {/* CTA Buttons */}
                   <div className="mt-4 space-y-3">
-                    <a
-                      href={`https://wa.me/${whatsapp}?text=${whatsappMessage}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Link
+                      href={`/${lang}/turlar/${tour.slug.current}/rezervasyon`}
                       className="block w-full bg-primary hover:bg-gold text-white font-semibold py-3.5 rounded-lg text-center text-sm transition-colors"
                     >
                       {dict.tourDetail.reserve}
-                    </a>
+                    </Link>
                     <a
                       href={`https://wa.me/${whatsapp}?text=${encodeURIComponent(`"${tour.name}" hakkında soru sormak istiyorum.`)}`}
                       target="_blank"
@@ -233,6 +239,36 @@ export default async function TurDetayPage({
               <span className="inline-flex items-center gap-1.5 bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1 rounded-full">
                 {tour.destination.flag} {tour.destination.name}
               </span>
+            </div>
+          </div>
+        )}
+
+        {/* ===== Other Dates ===== */}
+        {otherDates.length > 0 && (
+          <div className="max-w-6xl mx-auto px-4 pb-6">
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <h2 className="font-heading font-bold text-primary text-lg mb-4 flex items-center gap-2">
+                <svg className="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                {dict.tourDetail.otherDates}
+              </h2>
+              <div className="space-y-2">
+                {otherDates.map((ot) => (
+                  <Link
+                    key={ot._id}
+                    href={`/${lang}/turlar/${ot.slug.current}`}
+                    className="flex items-center justify-between p-4 rounded-xl border border-gray-100 hover:border-primary/30 hover:bg-primary/5 transition-all group"
+                  >
+                    <span className="text-gray-700 font-medium text-sm group-hover:text-primary transition-colors">
+                      {ot.date}
+                    </span>
+                    <svg className="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         )}
