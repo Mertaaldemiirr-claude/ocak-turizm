@@ -165,6 +165,11 @@ export default async function TurDetayPage({
                     <div className="flex justify-between py-2.5 border-b border-gray-100">
                       <span className="text-gray-600">{dict.tourDetail.doubleRoom}</span>
                       <span className="font-semibold text-primary whitespace-nowrap ml-4">
+                        {tour.oldPrice != null && (
+                          <span className="text-gray-400 line-through font-normal mr-2">
+                            {sym}{tour.oldPrice.toLocaleString(localeForNumber)}
+                          </span>
+                        )}
                         {sym}{tour.price?.toLocaleString(localeForNumber)} {tour.currency || "EUR"}
                       </span>
                     </div>
