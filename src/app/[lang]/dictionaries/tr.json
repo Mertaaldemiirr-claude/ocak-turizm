@@ -6,7 +6,7 @@
     "gallery": "Galeri",
     "blog": "Blog",
     "contact": "İletişim",
-    "searchPlaceholder": "Tur ara\u2026",
+    "searchPlaceholder": "Tur ara…",
     "tourRequest": "Tur Talebi"
   },
   "hero": {
@@ -80,7 +80,9 @@
     "successTitle": "Talebiniz Alındı!",
     "successMessage": "En kısa sürede sizinle iletişime geçeceğiz.",
     "newRequest": "Yeni Talep Oluştur",
-    "whatsappMessage": "Merhaba, Ocak Turizm'den bilgi almak istiyorum."
+    "whatsappMessage": "Merhaba, Ocak Turizm'den bilgi almak istiyorum.",
+    "errorMessage": "Gönderim sırasında bir hata oluştu. Lütfen tekrar deneyin.",
+    "sending": "Gönderiliyor…"
   },
   "footer": {
     "description": "İslami değerlere uygun, helal konaklama ve namaz düzenli tur organizasyonları ile gönül rahatlığıyla seyahat edin.",
@@ -187,7 +189,9 @@
     "submit": "Mesaj Gönder",
     "successTitle": "Mesajınız Alındı!",
     "successMessage": "En kısa sürede sizinle iletişime geçeceğiz.",
-    "newMessage": "Yeni Mesaj Gönder"
+    "newMessage": "Yeni Mesaj Gönder",
+    "errorMessage": "Gönderim sırasında bir hata oluştu. Lütfen tekrar deneyin.",
+    "sending": "Gönderiliyor…"
   },
   "aboutPage": {
     "title": "Hakkımızda",
@@ -272,7 +276,9 @@
     "submit": "Talebi Gönder",
     "successTitle": "Talebiniz Alındı!",
     "successMessage": "Ekibimiz en kısa sürede size özel tur programınızı hazırlayacak.",
-    "newRequest": "Yeni Talep Oluştur"
+    "newRequest": "Yeni Talep Oluştur",
+    "errorMessage": "Gönderim sırasında bir hata oluştu. Lütfen tekrar deneyin.",
+    "sending": "Gönderiliyor…"
   },
   "blogDetail": {
     "backToBlog": "Blog'a Dön"

@@ -12,6 +12,7 @@ interface Tour {
   imageUrl: string | null;
   days: number;
   price: number;
+  currency?: string;
   date: string;
   cities: string;
   destination: { name: string; slug: { current: string }; flag: string } | null;
@@ -113,7 +114,8 @@ export default function TourFilters({ tours, destinations }: Props) {
                 <div className="flex items-center justify-between pt-3 border-t border-gray-100">
                   <span className="text-gray-500 text-xs">{tour.date}</span>
                   <span className="font-heading font-bold text-gold text-lg">
-                    €{tour.price?.toLocaleString("tr-TR")}
+                    {tour.currency === "USD" ? "$" : tour.currency === "TRY" ? "₺" : "€"}
+                    {tour.price?.toLocaleString("tr-TR")}
                   </span>
                 </div>
               </div>

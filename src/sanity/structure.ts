@@ -8,6 +8,10 @@ export const structure: StructureResolver = (S) =>
         .title('Site Ayarlari')
         .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
       S.divider(),
+      S.documentTypeListItem('reservation').title('📥 Rezervasyonlar'),
+      S.documentTypeListItem('tourRequest').title('📥 Ozel Tur Talepleri'),
+      S.documentTypeListItem('contactMessage').title('📥 Iletisim Mesajlari'),
+      S.divider(),
       S.documentTypeListItem('tour').title('Turlar'),
       S.documentTypeListItem('destination').title('Destinasyonlar'),
       S.divider(),

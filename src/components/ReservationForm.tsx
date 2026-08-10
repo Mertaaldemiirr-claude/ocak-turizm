@@ -6,7 +6,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import type { SiteSettings } from "@/sanity/lib/types";
 import { useTranslation } from "./LocaleProvider";
 
-const destinations = ["Mısır", "Fas", "Özbekistan", "Bosna Hersek"];
+const destinations = ["Mısır", "Fas", "Özbekistan", "Bosna Hersek", "Balkanlar", "Şam-ı Şerif", "Şam - Lübnan"];
 
 interface Props {
   settings: SiteSettings | null;
@@ -30,6 +30,8 @@ export default function ReservationForm({ settings }: Props) {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -37,9 +39,34 @@ export default function ReservationForm({ settings }: Props) {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setError(false);
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/custom-tour", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          phone: form.phone,
+          email: form.email,
+          startDate: form.date,
+          people: form.people,
+          destinations: form.destination,
+          notes: form.message,
+        }),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        setError(true);
+      }
+    } catch {
+      setError(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const whatsappMessage = encodeURIComponent(
@@ -148,8 +175,12 @@ export default function ReservationForm({ settings }: Props) {
                   <textarea name="message" rows={3} value={form.message} onChange={handleChange} className={`${inputClasses} resize-none`} placeholder={t.messagePlaceholder} />
                 </div>
 
-                <button type="submit" className="w-full bg-primary hover:bg-gold text-white font-heading font-semibold py-3 rounded-lg transition-colors text-sm">
-                  {t.submit}
+                {error && (
+                  <p className="text-red-500 text-sm bg-red-50 border border-red-100 rounded-lg px-4 py-3">{t.errorMessage}</p>
+                )}
+
+                <button type="submit" disabled={submitting} className="w-full bg-primary hover:bg-gold text-white font-heading font-semibold py-3 rounded-lg transition-colors text-sm disabled:opacity-60 disabled:cursor-not-allowed">
+                  {submitting ? t.sending : t.submit}
                 </button>
               </form>
             )}

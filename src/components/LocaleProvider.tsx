@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect } from "react";
 import type { Dictionary } from "@/app/[lang]/dictionaries";
 
-type Locale = "tr" | "en" | "de" | "fr" | "es";
+type Locale = "tr" | "en" | "de" | "fr" | "es" | "ar" | "ru";
 
 interface LocaleContextType {
   locale: Locale;
@@ -23,6 +23,7 @@ export function LocaleProvider({
 }) {
   useEffect(() => {
     document.documentElement.lang = locale;
+    document.documentElement.dir = locale === "ar" ? "rtl" : "ltr";
   }, [locale]);
 
   return (

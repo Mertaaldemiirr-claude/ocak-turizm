@@ -6,7 +6,7 @@
     "gallery": "Galería",
     "blog": "Blog",
     "contact": "Contacto",
-    "searchPlaceholder": "Buscar tour\u2026",
+    "searchPlaceholder": "Buscar tour…",
     "tourRequest": "Solicitar tour"
   },
   "hero": {
@@ -80,7 +80,9 @@
     "successTitle": "¡Solicitud recibida!",
     "successMessage": "Nos pondremos en contacto con usted lo antes posible.",
     "newRequest": "Nueva solicitud",
-    "whatsappMessage": "Hola, me gustaría obtener información de Ocak Turismo."
+    "whatsappMessage": "Hola, me gustaría obtener información de Ocak Turismo.",
+    "errorMessage": "Se produjo un error al enviar. Por favor, inténtelo de nuevo.",
+    "sending": "Enviando…"
   },
   "footer": {
     "description": "Viaje con tranquilidad con alojamientos halal y horarios de oración conformes a los valores islámicos.",
@@ -187,7 +189,9 @@
     "submit": "Enviar mensaje",
     "successTitle": "¡Mensaje recibido!",
     "successMessage": "Nos pondremos en contacto con usted lo antes posible.",
-    "newMessage": "Enviar nuevo mensaje"
+    "newMessage": "Enviar nuevo mensaje",
+    "errorMessage": "Se produjo un error al enviar. Por favor, inténtelo de nuevo.",
+    "sending": "Enviando…"
   },
   "aboutPage": {
     "title": "Sobre nosotros",
@@ -272,7 +276,9 @@
     "submit": "Enviar solicitud",
     "successTitle": "¡Solicitud recibida!",
     "successMessage": "Nuestro equipo preparará su programa personalizado lo antes posible.",
-    "newRequest": "Nueva solicitud"
+    "newRequest": "Nueva solicitud",
+    "errorMessage": "Se produjo un error al enviar. Por favor, inténtelo de nuevo.",
+    "sending": "Enviando…"
   },
   "blogDetail": {
     "backToBlog": "Volver al blog"

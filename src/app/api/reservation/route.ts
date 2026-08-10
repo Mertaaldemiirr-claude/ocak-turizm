@@ -1,5 +1,31 @@
 import { NextResponse } from "next/server";
-import { createServiceClient } from "@/lib/supabase";
+import { createWriteClient } from "@/lib/sanityWrite";
+import { sendNotifyEmail, emailLayout, esc } from "@/lib/notifyEmail";
+
+type Participant = {
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  email?: string;
+  room?: string;
+};
+
+function formatParticipants(label: string, list: Participant[] | undefined): string {
+  if (!list?.length) return "";
+  return (
+    `${label}:\n` +
+    list
+      .map(
+        (p, i) =>
+          `  ${i + 1}. ${p.firstName || ""} ${p.lastName || ""}` +
+          (p.phone ? ` | Tel: ${p.phone}` : "") +
+          (p.email ? ` | E-posta: ${p.email}` : "") +
+          (p.room ? ` | Oda: ${p.room}` : "")
+      )
+      .join("\n") +
+    "\n"
+  );
+}
 
 export async function POST(request: Request) {
   try {
@@ -15,27 +41,52 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Main person info required" }, { status: 400 });
     }
 
-    const supabase = createServiceClient();
-    if (supabase) {
-      await supabase.from("reservations").insert({
-        tour_name: tourName,
-        tour_slug: tourSlug,
-        tour_date: tourDate,
-        contact_name: `${mainPerson.firstName} ${mainPerson.lastName}`,
-        contact_phone: mainPerson.phone,
-        contact_email: mainPerson.email || null,
-        adult_count: adults.length,
-        child_count: children?.length || 0,
-        infant_count: infants?.length || 0,
-        participants: { adults, children, infants },
-        total_price: totalPrice,
-        currency,
-        status: "pending",
-      });
+    const client = createWriteClient();
+    if (!client) {
+      console.error("SANITY_TOKEN missing — reservation cannot be stored");
+      return NextResponse.json({ error: "Storage not configured" }, { status: 500 });
     }
 
+    const participantsText =
+      formatParticipants("Yetişkinler", adults) +
+      formatParticipants("Çocuklar", children) +
+      formatParticipants("Bebekler", infants);
+
+    await client.create({
+      _type: "reservation",
+      tourName,
+      tourSlug,
+      tourDate: tourDate || "",
+      contactName: `${mainPerson.firstName} ${mainPerson.lastName}`,
+      contactPhone: mainPerson.phone,
+      contactEmail: mainPerson.email || "",
+      adultCount: adults.length,
+      childCount: children?.length || 0,
+      infantCount: infants?.length || 0,
+      totalPrice: totalPrice || 0,
+      currency: currency || "",
+      participants: participantsText,
+      status: "pending",
+      receivedAt: new Date().toISOString(),
+    });
+
+    await sendNotifyEmail(
+      `Yeni Rezervasyon: ${tourName} — ${mainPerson.firstName} ${mainPerson.lastName}`,
+      emailLayout("🧾 Yeni Rezervasyon", [
+        ["Tur", esc(tourName)],
+        ["Tarih", esc(tourDate)],
+        ["Ad Soyad", esc(`${mainPerson.firstName} ${mainPerson.lastName}`)],
+        ["Telefon", esc(mainPerson.phone)],
+        ["E-posta", esc(mainPerson.email || "-")],
+        ["Kişiler", `${adults.length} yetişkin, ${children?.length || 0} çocuk, ${infants?.length || 0} bebek`],
+        ["Toplam", `${esc(totalPrice)} ${esc(currency)}`],
+        ["Katılımcılar", esc(participantsText)],
+      ])
+    );
+
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (err) {
+    console.error("Reservation error:", err);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

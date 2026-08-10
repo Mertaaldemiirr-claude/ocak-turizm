@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 const SITE_PASSWORD = "ocak2026";
 const COOKIE_NAME = "site-auth";
 
-const locales = ["tr", "en", "de", "fr", "es"];
+const locales = ["tr", "en", "de", "fr", "es", "ar", "ru"];
 const defaultLocale = "tr";
 
 function getLocale(request: NextRequest): string {

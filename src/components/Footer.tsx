@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { FaWhatsapp, FaInstagram, FaFacebookF } from "react-icons/fa";
 import type { SiteSettings } from "@/sanity/lib/types";
 import { useTranslation, useLocalePath } from "./LocaleProvider";
@@ -41,9 +42,14 @@ export default function Footer({ settings }: Props) {
       <div className="max-w-6xl mx-auto px-4 py-14">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
-            <div className="font-heading font-bold text-xl mb-3">
-              Ocak<span className="text-gold ml-0.5">.</span>
-              <span className="text-xs font-normal text-white/50 ml-1 tracking-widest uppercase">Turizm</span>
+            <div className="mb-4">
+              <Image
+                src="/images/logo-white.png"
+                alt="Ocak Turizm"
+                width={112}
+                height={45}
+                className="h-11 w-auto"
+              />
             </div>
             <p className="text-white/50 text-sm leading-relaxed mb-5">
               {t.description}

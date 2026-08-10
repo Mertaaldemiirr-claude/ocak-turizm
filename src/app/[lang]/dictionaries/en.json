@@ -6,7 +6,7 @@
     "gallery": "Gallery",
     "blog": "Blog",
     "contact": "Contact",
-    "searchPlaceholder": "Search tours\u2026",
+    "searchPlaceholder": "Search tours…",
     "tourRequest": "Tour Request"
   },
   "hero": {
@@ -80,7 +80,9 @@
     "successTitle": "Request Received!",
     "successMessage": "We will contact you as soon as possible.",
     "newRequest": "Create New Request",
-    "whatsappMessage": "Hello, I would like to get information from Ocak Tourism."
+    "whatsappMessage": "Hello, I would like to get information from Ocak Tourism.",
+    "errorMessage": "Something went wrong while sending. Please try again.",
+    "sending": "Sending…"
   },
   "footer": {
     "description": "Travel with peace of mind with tour organizations that feature halal accommodation and prayer schedules in accordance with Islamic values.",
@@ -187,7 +189,9 @@
     "submit": "Send Message",
     "successTitle": "Message Received!",
     "successMessage": "We will contact you as soon as possible.",
-    "newMessage": "Send New Message"
+    "newMessage": "Send New Message",
+    "errorMessage": "Something went wrong while sending. Please try again.",
+    "sending": "Sending…"
   },
   "aboutPage": {
     "title": "About Us",
@@ -272,7 +276,9 @@
     "submit": "Submit Request",
     "successTitle": "Request Received!",
     "successMessage": "Our team will prepare your custom tour program as soon as possible.",
-    "newRequest": "Create New Request"
+    "newRequest": "Create New Request",
+    "errorMessage": "Something went wrong while sending. Please try again.",
+    "sending": "Sending…"
   },
   "blogDetail": {
     "backToBlog": "Back to Blog"

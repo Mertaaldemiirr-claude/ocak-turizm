@@ -6,7 +6,7 @@
     "gallery": "Galerie",
     "blog": "Blog",
     "contact": "Contact",
-    "searchPlaceholder": "Rechercher un circuit\u2026",
+    "searchPlaceholder": "Rechercher un circuit…",
     "tourRequest": "Demande de circuit"
   },
   "hero": {
@@ -80,7 +80,9 @@
     "successTitle": "Demande reçue !",
     "successMessage": "Nous vous contacterons dans les plus brefs délais.",
     "newRequest": "Nouvelle demande",
-    "whatsappMessage": "Bonjour, je souhaite obtenir des informations sur Ocak Tourisme."
+    "whatsappMessage": "Bonjour, je souhaite obtenir des informations sur Ocak Tourisme.",
+    "errorMessage": "Une erreur s'est produite lors de l'envoi. Veuillez réessayer.",
+    "sending": "Envoi en cours…"
   },
   "footer": {
     "description": "Voyagez en toute sérénité avec des hébergements halal et des horaires de prière conformes aux valeurs islamiques.",
@@ -187,7 +189,9 @@
     "submit": "Envoyer le message",
     "successTitle": "Message reçu !",
     "successMessage": "Nous vous contacterons dans les plus brefs délais.",
-    "newMessage": "Envoyer un nouveau message"
+    "newMessage": "Envoyer un nouveau message",
+    "errorMessage": "Une erreur s'est produite lors de l'envoi. Veuillez réessayer.",
+    "sending": "Envoi en cours…"
   },
   "aboutPage": {
     "title": "À propos de nous",
@@ -272,7 +276,9 @@
     "submit": "Envoyer la demande",
     "successTitle": "Demande reçue !",
     "successMessage": "Notre équipe préparera votre programme personnalisé dans les plus brefs délais.",
-    "newRequest": "Nouvelle demande"
+    "newRequest": "Nouvelle demande",
+    "errorMessage": "Une erreur s'est produite lors de l'envoi. Veuillez réessayer.",
+    "sending": "Envoi en cours…"
   },
   "blogDetail": {
     "backToBlog": "Retour au blog"

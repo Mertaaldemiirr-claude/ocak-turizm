@@ -18,7 +18,7 @@ export const toursQuery = groq`
 `
 
 export const allToursQuery = groq`
-  *[_type == "tour"] | order(order asc) {
+  *[_type == "tour"] | order(startDate asc) {
     _id,
     name,
     slug,
@@ -27,7 +27,9 @@ export const allToursQuery = groq`
     days,
     price,
     oldPrice,
+    currency,
     date,
+    startDate,
     cities,
     description,
     program,
@@ -70,7 +72,7 @@ export const tourDetailQuery = groq`
 `
 
 export const otherDatesQuery = groq`
-  *[_type == "tour" && tourGroup == $tourGroup && slug.current != $slug] | order(date asc) {
+  *[_type == "tour" && tourGroup == $tourGroup && slug.current != $slug] | order(startDate asc) {
     _id,
     name,
     slug,
@@ -96,13 +98,14 @@ export const relatedToursQuery = groq`
 `
 
 export const searchToursQuery = groq`
-  *[_type == "tour" && (name match $q || cities match $q || destination->name match $q)] | order(order asc) [0...10] {
+  *[_type == "tour" && (name match $q || cities match $q || destination->name match $q)] | order(startDate asc) [0...10] {
     _id,
     name,
     slug,
     "imageUrl": image.asset->url,
     days,
     price,
+    currency,
     date,
     destination-> { name, flag }
   }

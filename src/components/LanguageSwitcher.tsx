@@ -10,6 +10,8 @@ const localeFlags: Record<string, string> = {
   de: "🇩🇪",
   fr: "🇫🇷",
   es: "🇪🇸",
+  ar: "🇸🇦",
+  ru: "🇷🇺",
 };
 
 const localeNames: Record<string, string> = {
@@ -18,9 +20,11 @@ const localeNames: Record<string, string> = {
   de: "Deutsch",
   fr: "Français",
   es: "Español",
+  ar: "العربية",
+  ru: "Русский",
 };
 
-const allLocales = ["tr", "en", "de", "fr", "es"] as const;
+const allLocales = ["tr", "en", "de", "fr", "es", "ar", "ru"] as const;
 
 export default function LanguageSwitcher() {
   const { locale } = useTranslation();

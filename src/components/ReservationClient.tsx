@@ -51,7 +51,7 @@ export default function ReservationClient({
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const localeForNumber = lang === "tr" ? "tr-TR" : lang === "de" ? "de-DE" : lang === "fr" ? "fr-FR" : lang === "es" ? "es-ES" : "en-US";
+  const localeForNumber = lang === "tr" ? "tr-TR" : lang === "de" ? "de-DE" : lang === "fr" ? "fr-FR" : lang === "es" ? "es-ES" : lang === "ru" ? "ru-RU" : "en-US";
 
   const updateCount = (
     type: "adult" | "child" | "infant",

@@ -12,7 +12,7 @@ interface Props {
   tourFileUrl?: string;
 }
 
-type Tab = "program" | "included" | "notes" | "file" | "faq";
+type Tab = "program" | "notes" | "file" | "faq";
 
 export default function TourDetailClient({
   program,
@@ -30,14 +30,14 @@ export default function TourDetailClient({
 
   const tabs: { key: Tab; label: string }[] = [
     { key: "program", label: t.program },
-    { key: "included", label: t.includedExcluded },
     { key: "notes", label: t.importantNotes },
     { key: "file", label: t.tourFile },
     { key: "faq", label: t.faq },
   ];
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div className="flex flex-col gap-6">
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden lg:order-2">
       {/* STM-style pill tabs */}
       <div className="flex flex-wrap gap-2 p-4 border-b border-gray-100 bg-gray-50">
         {tabs.map((tab) => (
@@ -101,55 +101,6 @@ export default function TourDetailClient({
                 </div>
               ))
             ) : (
-              <p className="text-gray-400 text-sm">{t.notAdded}</p>
-            )}
-          </div>
-        )}
-
-        {/* Dahil / Hariç Tab */}
-        {activeTab === "included" && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {included && included.length > 0 && (
-              <div>
-                <h3 className="font-heading font-bold text-primary text-lg mb-4 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  {t.included}
-                </h3>
-                <ul className="space-y-2.5">
-                  {included.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-sm text-gray-600 leading-relaxed">
-                      <svg className="w-4 h-4 text-green-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {excluded && excluded.length > 0 && (
-              <div>
-                <h3 className="font-heading font-bold text-primary text-lg mb-4 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                  {t.excluded}
-                </h3>
-                <ul className="space-y-2.5">
-                  {excluded.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-sm text-gray-600 leading-relaxed">
-                      <svg className="w-4 h-4 text-red-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {!included?.length && !excluded?.length && (
               <p className="text-gray-400 text-sm">{t.notAdded}</p>
             )}
           </div>
@@ -253,6 +204,55 @@ export default function TourDetailClient({
           </div>
         )}
       </div>
+    </div>
+
+    {/* Dahil / Hariç — masaüstünde sekme kartının üstünde görünür */}
+    {(included?.length || excluded?.length) ? (
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8 lg:order-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          {included && included.length > 0 && (
+            <div>
+              <h3 className="font-heading font-bold text-primary text-lg mb-4 flex items-center gap-2">
+                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                {t.included}
+              </h3>
+              <ul className="space-y-2.5">
+                {included.map((item, i) => (
+                  <li key={i} className="flex items-start gap-2.5 text-sm text-gray-600 leading-relaxed">
+                    <svg className="w-4 h-4 text-green-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {excluded && excluded.length > 0 && (
+            <div>
+              <h3 className="font-heading font-bold text-primary text-lg mb-4 flex items-center gap-2">
+                <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                {t.excluded}
+              </h3>
+              <ul className="space-y-2.5">
+                {excluded.map((item, i) => (
+                  <li key={i} className="flex items-start gap-2.5 text-sm text-gray-600 leading-relaxed">
+                    <svg className="w-4 h-4 text-red-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+    ) : null}
     </div>
   );
 }

@@ -6,7 +6,7 @@
     "gallery": "Galerie",
     "blog": "Blog",
     "contact": "Kontakt",
-    "searchPlaceholder": "Tour suchen\u2026",
+    "searchPlaceholder": "Tour suchen…",
     "tourRequest": "Touranfrage"
   },
   "hero": {
@@ -80,7 +80,9 @@
     "successTitle": "Anfrage erhalten!",
     "successMessage": "Wir werden uns so schnell wie möglich bei Ihnen melden.",
     "newRequest": "Neue Anfrage erstellen",
-    "whatsappMessage": "Hallo, ich möchte Informationen von Ocak Tourismus erhalten."
+    "whatsappMessage": "Hallo, ich möchte Informationen von Ocak Tourismus erhalten.",
+    "errorMessage": "Beim Senden ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+    "sending": "Wird gesendet…"
   },
   "footer": {
     "description": "Reisen Sie mit Halal-Unterkünften und Gebetszeiten im Einklang mit islamischen Werten.",
@@ -187,7 +189,9 @@
     "submit": "Nachricht senden",
     "successTitle": "Nachricht erhalten!",
     "successMessage": "Wir werden uns so schnell wie möglich bei Ihnen melden.",
-    "newMessage": "Neue Nachricht senden"
+    "newMessage": "Neue Nachricht senden",
+    "errorMessage": "Beim Senden ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+    "sending": "Wird gesendet…"
   },
   "aboutPage": {
     "title": "Über uns",
@@ -272,7 +276,9 @@
     "submit": "Anfrage senden",
     "successTitle": "Anfrage erhalten!",
     "successMessage": "Unser Team wird Ihr individuelles Tourprogramm so schnell wie möglich vorbereiten.",
-    "newRequest": "Neue Anfrage erstellen"
+    "newRequest": "Neue Anfrage erstellen",
+    "errorMessage": "Beim Senden ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+    "sending": "Wird gesendet…"
   },
   "blogDetail": {
     "backToBlog": "Zurück zum Blog"

@@ -104,6 +104,12 @@ export const tour = defineType({
       description: 'Ornek: 15-21 Agustos 2026',
     }),
     defineField({
+      name: 'startDate',
+      title: 'Baslangic Tarihi (siralama icin)',
+      type: 'date',
+      description: 'Turlar sayfasindaki siralama bu tarihe gore yapilir',
+    }),
+    defineField({
       name: 'cities',
       title: 'Sehirler',
       type: 'string',

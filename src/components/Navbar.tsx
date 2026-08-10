@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FaWhatsapp, FaInstagram, FaFacebookF, FaPhoneAlt } from "react-icons/fa";
 import { HiMenu, HiX, HiSearch } from "react-icons/hi";
@@ -67,9 +68,15 @@ export default function Navbar({ settings }: Props) {
 
       <nav className="bg-white border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-4 flex items-center justify-between h-16">
-          <a href={lp("/")} className="font-heading font-bold text-xl text-primary">
-            Ocak<span className="text-gold ml-0.5">.</span>
-            <span className="text-xs font-normal text-gray-400 ml-1 tracking-widest uppercase">Turizm</span>
+          <a href={lp("/")} className="flex items-center">
+            <Image
+              src="/images/logo-navy.png"
+              alt="Ocak Turizm"
+              width={112}
+              height={45}
+              className="h-10 w-auto"
+              priority
+            />
           </a>
 
           <div className="hidden lg:flex items-center gap-1">

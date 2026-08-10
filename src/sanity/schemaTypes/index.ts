@@ -7,7 +7,10 @@ import { blogPost } from './blogPost'
 import { page } from './page'
 import { siteSettings } from './siteSettings'
 import { galleryImage } from './galleryImage'
+import { reservation } from './reservation'
+import { tourRequest } from './tourRequest'
+import { contactMessage } from './contactMessage'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [tour, destination, testimonial, faq, blogPost, page, siteSettings, galleryImage],
+  types: [tour, destination, testimonial, faq, blogPost, page, siteSettings, galleryImage, reservation, tourRequest, contactMessage],
 }

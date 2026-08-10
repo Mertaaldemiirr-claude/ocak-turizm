@@ -8,14 +8,34 @@ export default function ContactForm() {
   const t = dict.contactPage;
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setError(false);
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+        setForm({ name: "", email: "", phone: "", message: "" });
+      } else {
+        setError(true);
+      }
+    } catch {
+      setError(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const inputClasses = "w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all text-sm bg-white";
@@ -62,8 +82,12 @@ export default function ContactForm() {
         <textarea name="message" rows={5} required value={form.message} onChange={handleChange} className={`${inputClasses} resize-none`} placeholder={t.messagePlaceholder} />
       </div>
 
-      <button type="submit" className="w-full bg-primary hover:bg-gold text-white font-heading font-semibold py-3 rounded-lg transition-colors text-sm">
-        {t.submit}
+      {error && (
+        <p className="text-red-500 text-sm bg-red-50 border border-red-100 rounded-lg px-4 py-3">{t.errorMessage}</p>
+      )}
+
+      <button type="submit" disabled={submitting} className="w-full bg-primary hover:bg-gold text-white font-heading font-semibold py-3 rounded-lg transition-colors text-sm disabled:opacity-60 disabled:cursor-not-allowed">
+        {submitting ? t.sending : t.submit}
       </button>
     </form>
   );

@@ -8,6 +8,8 @@ const localeMap: Record<string, string> = {
   de: "de",
   fr: "fr",
   es: "es",
+  ar: "ar",
+  ru: "ru",
 };
 
 function getCachePath(locale: string): string {

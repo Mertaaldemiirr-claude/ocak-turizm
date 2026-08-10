@@ -77,7 +77,7 @@ export default async function TurDetayPage({
           ? [tour.imageUrl]
           : [];
 
-  const localeForNumber = lang === "tr" ? "tr-TR" : lang === "de" ? "de-DE" : lang === "fr" ? "fr-FR" : lang === "es" ? "es-ES" : "en-US";
+  const localeForNumber = lang === "tr" ? "tr-TR" : lang === "de" ? "de-DE" : lang === "fr" ? "fr-FR" : lang === "es" ? "es-ES" : lang === "ru" ? "ru-RU" : "en-US";
 
   return (
     <>
