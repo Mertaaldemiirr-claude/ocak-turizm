@@ -41,7 +41,7 @@ export default async function PaymentFailed({
               {dict.paymentFailed.tryAgain}
             </Link>
             <a
-              href={`https://wa.me/${settings?.whatsapp || "905551234567"}`}
+              href={`https://wa.me/${settings?.whatsapp || "905550130571"}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-[#25D366] hover:bg-[#20bd5a] text-white font-semibold px-8 py-3 rounded-lg transition-colors text-sm"

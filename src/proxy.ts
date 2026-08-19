@@ -22,7 +22,9 @@ export function proxy(request: NextRequest) {
     pathname.startsWith("/_next") ||
     pathname.startsWith("/favicon") ||
     pathname.startsWith("/images") ||
-    pathname.match(/\.(ico|png|jpg|jpeg|svg|webp|gif|css|js|mp4)$/)
+    pathname === "/robots.txt" ||
+    pathname === "/sitemap.xml" ||
+    pathname.match(/\.(ico|png|jpg|jpeg|svg|webp|gif|css|js|mp4|txt|xml)$/)
   ) {
     return NextResponse.next();
   }
@@ -42,11 +44,13 @@ export function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Auth check: if no cookie, rewrite to /giris
-  const authCookie = request.cookies.get(COOKIE_NAME);
-  if (authCookie?.value !== "true") {
-    const loginUrl = new URL("/giris", request.url);
-    return NextResponse.rewrite(loginUrl);
+  // Site canli (19 Agu 2026): sifre kapisi kaldirildi. Gerekirse SITE_GATE=on ile tekrar acilir.
+  if (process.env.SITE_GATE === "on") {
+    const authCookie = request.cookies.get(COOKIE_NAME);
+    if (authCookie?.value !== "true") {
+      const loginUrl = new URL("/giris", request.url);
+      return NextResponse.rewrite(loginUrl);
+    }
   }
 
   // Locale routing: check if pathname already has a locale prefix

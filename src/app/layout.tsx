@@ -15,6 +15,7 @@ const raleway = Raleway({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ocakturizm.com"),
   title: "Ocak Turizm | Keşfet. Deneyimle. Hatırla.",
   description:
     "Ocak Turizm ile unutulmaz tatiller, özel rotalar ve size özel deneyimler. Mısır, Fas, Özbekistan ve Bosna Hersek turları.",

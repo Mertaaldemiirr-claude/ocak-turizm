@@ -25,6 +25,7 @@ export default function Testimonials({ testimonials }: Props) {
   const perPage = 3;
   const totalPages = Math.ceil(testimonials.length / perPage);
   const visible = testimonials.slice(page * perPage, page * perPage + perPage);
+  if (!testimonials || testimonials.length === 0) return null;
 
   return (
     <section id="yorumlar" className="py-16 lg:py-20 bg-gray-50">

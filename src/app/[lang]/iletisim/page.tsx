@@ -18,10 +18,10 @@ export default async function IletisimPage({
   const dict = await getDictionary(lang as Locale);
   const settings = await client.fetch(siteSettingsQuery);
 
-  const phone = settings?.phone || "+90 555 123 4567";
-  const email = settings?.email || "info@ocakturizm.com";
+  const phone = settings?.phone || "0555 013 0571";
+  const email = settings?.email || "bilgi@ocakturizm.com";
   const address = settings?.address || "İstanbul, Türkiye";
-  const whatsapp = settings?.whatsapp || "905551234567";
+  const whatsapp = settings?.whatsapp || "905550130571";
   const tursabNo = settings?.tursabNo || "XXXXX";
 
   return (

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createWriteClient } from "@/lib/sanityWrite";
-import { sendNotifyEmail, emailLayout, esc } from "@/lib/notifyEmail";
+import { sendNotifyEmail, emailLayout, esc, sendCustomerEmail, customerLayout } from "@/lib/notifyEmail";
 
 export async function POST(request: Request) {
   try {
@@ -43,6 +43,16 @@ export async function POST(request: Request) {
         ["Konaklama", esc(accommodation || "-")],
         ["Gitmek İstediği Yerler", esc(destinations || "-")],
         ["Notlar", esc(notes || "-")],
+      ])
+    );
+
+    await sendCustomerEmail(
+      email,
+      "Özel tur talebiniz alındı — Ocak Turizm",
+      customerLayout(name, "Özel tur talebinizi aldık. Rotanızı ve tarihlerinizi inceleyip size özel bir teklifle en kısa sürede döneceğiz.", [
+        ["Tarih", esc(`${startDate || "?"} → ${endDate || "?"}`)],
+        ["Kişi Sayısı", esc(people || "-")],
+        ["Gitmek İstediğiniz Yerler", esc(destinations || "-")],
       ])
     );
 

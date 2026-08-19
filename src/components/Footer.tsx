@@ -29,10 +29,10 @@ export default function Footer({ settings }: Props) {
     { name: "Bosna Hersek", href: lp("/turlar?destinasyon=bosna-hersek") },
   ];
 
-  const phone = settings?.phone || "+90 555 123 4567";
-  const email = settings?.email || "info@ocakturizm.com";
+  const phone = settings?.phone || "0555 013 0571";
+  const email = settings?.email || "bilgi@ocakturizm.com";
   const address = settings?.address || "İstanbul, Türkiye";
-  const whatsapp = settings?.whatsapp || "905551234567";
+  const whatsapp = settings?.whatsapp || "905550130571";
   const instagram = settings?.instagram || "#";
   const facebook = settings?.facebook || "#";
   const tursabNo = settings?.tursabNo || "XXXXX";

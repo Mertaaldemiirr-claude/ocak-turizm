@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createWriteClient } from "@/lib/sanityWrite";
-import { sendNotifyEmail, emailLayout, esc } from "@/lib/notifyEmail";
+import { sendNotifyEmail, emailLayout, esc, sendCustomerEmail, customerLayout } from "@/lib/notifyEmail";
 
 export async function POST(request: Request) {
   try {
@@ -34,6 +34,12 @@ export async function POST(request: Request) {
         ["Telefon", esc(phone || "-")],
         ["Mesaj", esc(message)],
       ])
+    );
+
+    await sendCustomerEmail(
+      email,
+      "Mesajınız bize ulaştı — Ocak Turizm",
+      customerLayout(name, "Mesajınızı aldık, teşekkür ederiz. En kısa sürede size dönüş yapacağız.", [["Mesajınız", esc(message)]])
     );
 
     return NextResponse.json({ success: true });

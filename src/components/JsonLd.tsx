@@ -12,8 +12,8 @@ export function TravelAgencyJsonLd({ settings }: TravelAgencyProps) {
     description:
       "İslami değerlere uygun, helal konaklama ve namaz düzenli tur organizasyonları.",
     url: "https://ocakturizm.com",
-    telephone: settings?.phone || "+90 555 013 0571",
-    email: settings?.email || "info@ocakturizm.com",
+    telephone: settings?.phone || "0555 013 0571",
+    email: settings?.email || "bilgi@ocakturizm.com",
     address: {
       "@type": "PostalAddress",
       addressLocality: settings?.address || "İstanbul, Türkiye",

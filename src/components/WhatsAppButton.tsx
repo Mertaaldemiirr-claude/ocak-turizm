@@ -10,7 +10,7 @@ interface Props {
 
 export default function WhatsAppButton({ settings }: Props) {
   const { dict } = useTranslation();
-  const whatsapp = settings?.whatsapp || "905551234567";
+  const whatsapp = settings?.whatsapp || "905550130571";
 
   return (
     <a

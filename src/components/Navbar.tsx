@@ -23,7 +23,7 @@ export default function Navbar({ settings }: Props) {
     { name: t.tours, href: lp("/turlar") },
     { name: t.about, href: lp("/hakkimizda") },
     { name: t.gallery, href: lp("/galeri") },
-    { name: t.blog, href: lp("/blog") },
+    // { name: t.blog, href: lp("/blog") }, // blog icerigi gelince ac
     { name: t.contact, href: lp("/iletisim") },
   ];
 
@@ -33,8 +33,8 @@ export default function Navbar({ settings }: Props) {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
 
-  const phone = settings?.phone || "+90 555 123 4567";
-  const whatsapp = settings?.whatsapp || "905551234567";
+  const phone = settings?.phone || "0555 013 0571";
+  const whatsapp = settings?.whatsapp || "905550130571";
   const instagram = settings?.instagram || "#";
   const facebook = settings?.facebook || "#";
 

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createWriteClient } from "@/lib/sanityWrite";
-import { sendNotifyEmail, emailLayout, esc } from "@/lib/notifyEmail";
+import { sendNotifyEmail, emailLayout, esc, sendCustomerEmail, customerLayout } from "@/lib/notifyEmail";
 
 type Participant = {
   firstName?: string;
@@ -82,6 +82,21 @@ export async function POST(request: Request) {
         ["Toplam", `${esc(totalPrice)} ${esc(currency)}`],
         ["Katılımcılar", esc(participantsText)],
       ])
+    );
+
+    await sendCustomerEmail(
+      mainPerson.email,
+      `Rezervasyon talebiniz alındı — ${tourName}`,
+      customerLayout(
+        `${mainPerson.firstName} ${mainPerson.lastName}`,
+        "Rezervasyon talebiniz bize ulaştı. Ekibimiz en kısa sürede kontenjan ve ödeme bilgileri için sizinle iletişime geçecek. Kesin kayıt, ön ödeme sonrası yapılmaktadır.",
+        [
+          ["Tur", esc(tourName)],
+          ["Tarih", esc(tourDate)],
+          ["Kişiler", `${adults.length} yetişkin, ${children?.length || 0} çocuk, ${infants?.length || 0} bebek`],
+          ["Tahmini Toplam", `${esc(totalPrice)} ${esc(currency)}`],
+        ]
+      )
     );
 
     return NextResponse.json({ success: true });
