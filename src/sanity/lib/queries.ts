@@ -1,8 +1,13 @@
 import { groq } from 'next-sanity'
 
+// Gecmis tarihli turlari listelerden gizle (kalkis gunu dahil gosterilir)
+const UPCOMING = '(!defined(startDate) || dateTime(startDate + "T23:59:59Z") >= dateTime(now()))'
+
 export const toursQuery = groq`
-  *[_type == "tour" && featured == true] | order(order asc) {
+  *[_type == "tour" && ${UPCOMING}] | order(startDate asc) {
     _id,
+    tourGroup,
+    startDate,
     name,
     slug,
     "imageUrl": image.asset->url,
@@ -18,7 +23,7 @@ export const toursQuery = groq`
 `
 
 export const allToursQuery = groq`
-  *[_type == "tour"] | order(startDate asc) {
+  *[_type == "tour" && ${UPCOMING}] | order(startDate asc) {
     _id,
     name,
     slug,
@@ -72,7 +77,7 @@ export const tourDetailQuery = groq`
 `
 
 export const otherDatesQuery = groq`
-  *[_type == "tour" && tourGroup == $tourGroup && slug.current != $slug] | order(startDate asc) {
+  *[_type == "tour" && tourGroup == $tourGroup && slug.current != $slug && ${UPCOMING}] | order(startDate asc) {
     _id,
     name,
     slug,
@@ -83,7 +88,7 @@ export const otherDatesQuery = groq`
 `
 
 export const relatedToursQuery = groq`
-  *[_type == "tour" && slug.current != $slug && destination->slug.current == $destSlug] | order(order asc) [0...3] {
+  *[_type == "tour" && slug.current != $slug && destination->slug.current == $destSlug && ${UPCOMING}] | order(startDate asc) [0...3] {
     _id,
     name,
     slug,
@@ -98,7 +103,7 @@ export const relatedToursQuery = groq`
 `
 
 export const searchToursQuery = groq`
-  *[_type == "tour" && (name match $q || cities match $q || destination->name match $q)] | order(startDate asc) [0...10] {
+  *[_type == "tour" && ${UPCOMING} && (name match $q || cities match $q || destination->name match $q)] | order(startDate asc) [0...10] {
     _id,
     name,
     slug,
@@ -119,7 +124,7 @@ export const destinationsQuery = groq`
     flag,
     "imageUrl": image.asset->url,
     description,
-    "tourCount": count(*[_type == "tour" && references(^._id)])
+    "tourCount": count(*[_type == "tour" && references(^._id) && ${UPCOMING}])
   }
 `
 

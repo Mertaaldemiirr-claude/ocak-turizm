@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import type { Tour } from "@/sanity/lib/types";
 import Hero from "@/components/Hero";
 import FeaturedTours from "@/components/FeaturedTours";
 import Destinations from "@/components/Destinations";
@@ -40,7 +41,16 @@ export default async function Home({
 
   const [toursRaw, destinationsRaw, testimonialsRaw, faqsRaw, settingsRaw, blogPostsRaw] =
     await Promise.all([
-      client.fetch(toursQuery),
+      client.fetch<Tour[]>(toursQuery).then((all) => {
+        // Ana sayfa: her rotanin en yakin kalkisi (gecmis turlar sorguda zaten elenir)
+        const seen = new Set<string>();
+        return all.filter((t) => {
+          const key = (t as Tour & { tourGroup?: string }).tourGroup || t._id;
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        }).slice(0, 8);
+      }),
       client.fetch(destinationsQuery),
       client.fetch(testimonialsQuery),
       client.fetch(faqsQuery),
