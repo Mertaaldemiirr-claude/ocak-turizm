@@ -69,6 +69,18 @@ export const tour = defineType({
       type: 'number',
     }),
     defineField({
+      name: 'triplePrice',
+      title: 'Uc Kisilik Oda Fiyati (kisi basi)',
+      type: 'number',
+      description: 'Bos birakilirsa gosterilmez (Umre gibi oda tipine gore fiyatlanan turlar icin)',
+    }),
+    defineField({
+      name: 'quadPrice',
+      title: 'Dort Kisilik Oda Fiyati (kisi basi)',
+      type: 'number',
+      description: 'Bos birakilirsa gosterilmez',
+    }),
+    defineField({
       name: 'childPrice',
       title: 'Cocuk Fiyat (2-12 yas, EUR)',
       type: 'number',

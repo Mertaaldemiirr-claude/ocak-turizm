@@ -9,6 +9,8 @@ export interface Tour {
   price: number
   oldPrice?: number
   singlePrice?: number
+  triplePrice?: number
+  quadPrice?: number
   childPrice?: number
   infantPrice?: number
   currency?: string

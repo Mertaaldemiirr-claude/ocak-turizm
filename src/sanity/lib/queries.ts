@@ -57,6 +57,8 @@ export const tourDetailQuery = groq`
     price,
     oldPrice,
     singlePrice,
+    triplePrice,
+    quadPrice,
     childPrice,
     infantPrice,
     currency,

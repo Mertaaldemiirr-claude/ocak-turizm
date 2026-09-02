@@ -73,6 +73,8 @@ export default async function ReservationPage({
             days: tour.days,
             price: tour.price,
             singlePrice: tour.singlePrice,
+            triplePrice: tour.triplePrice,
+            quadPrice: tour.quadPrice,
             childPrice: tour.childPrice,
             infantPrice: tour.infantPrice,
             currency: tour.currency || "EUR",

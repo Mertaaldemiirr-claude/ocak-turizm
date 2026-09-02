@@ -173,6 +173,22 @@ export default async function TurDetayPage({
                         {sym}{tour.price?.toLocaleString(localeForNumber)} {tour.currency || "EUR"}
                       </span>
                     </div>
+                    {tour.triplePrice != null && (
+                      <div className="flex justify-between py-2.5 border-b border-gray-100">
+                        <span className="text-gray-600">{dict.tourDetail.tripleRoom}</span>
+                        <span className="font-semibold text-primary whitespace-nowrap ml-4">
+                          {sym}{tour.triplePrice.toLocaleString(localeForNumber)} {tour.currency || "EUR"}
+                        </span>
+                      </div>
+                    )}
+                    {tour.quadPrice != null && (
+                      <div className="flex justify-between py-2.5 border-b border-gray-100">
+                        <span className="text-gray-600">{dict.tourDetail.quadRoom}</span>
+                        <span className="font-semibold text-primary whitespace-nowrap ml-4">
+                          {sym}{tour.quadPrice.toLocaleString(localeForNumber)} {tour.currency || "EUR"}
+                        </span>
+                      </div>
+                    )}
                     {tour.singlePrice != null && (
                       <div className="flex justify-between py-2.5 border-b border-gray-100">
                         <span className="text-gray-600">{dict.tourDetail.singleRoom}</span>

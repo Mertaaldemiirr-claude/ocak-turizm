@@ -11,6 +11,8 @@ interface TourInfo {
   days: number;
   price: number;
   singlePrice?: number;
+  triplePrice?: number;
+  quadPrice?: number;
   childPrice?: number;
   infantPrice?: number;
   currency: string;
@@ -22,7 +24,7 @@ interface Participant {
   lastName: string;
   phone: string;
   email: string;
-  roomPreference: "double" | "single";
+  roomPreference: "double" | "single" | "triple" | "quad";
 }
 
 function emptyParticipant(): Participant {
@@ -94,9 +96,15 @@ export default function ReservationClient({
   const totalPrice = useMemo(() => {
     let total = 0;
     for (const af of adultForms) {
-      total += tour.price;
-      if (af.roomPreference === "single" && tour.singlePrice) {
-        total += tour.singlePrice;
+      if (af.roomPreference === "triple" && tour.triplePrice != null) {
+        total += tour.triplePrice;
+      } else if (af.roomPreference === "quad" && tour.quadPrice != null) {
+        total += tour.quadPrice;
+      } else {
+        total += tour.price;
+        if (af.roomPreference === "single" && tour.singlePrice) {
+          total += tour.singlePrice;
+        }
       }
     }
     total += children * (tour.childPrice ?? tour.price);
@@ -221,7 +229,8 @@ export default function ReservationClient({
                   isMain={i === 0}
                   showPhone={i === 0}
                   showEmail={i === 0}
-                  showRoom={tour.singlePrice != null}
+                  showRoom={tour.singlePrice != null || tour.triplePrice != null || tour.quadPrice != null}
+                  roomOptions={{ single: tour.singlePrice != null, triple: tour.triplePrice != null, quad: tour.quadPrice != null }}
                   form={form}
                   onChange={(field, value) => updateForm("adult", i, field, value)}
                   t={t}
@@ -399,6 +408,7 @@ function ParticipantForm({
   showPhone,
   showEmail,
   showRoom,
+  roomOptions,
   form,
   onChange,
   t,
@@ -409,6 +419,7 @@ function ParticipantForm({
   showPhone: boolean;
   showEmail: boolean;
   showRoom: boolean;
+  roomOptions?: { single: boolean; triple: boolean; quad: boolean };
   form: Participant;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChange: (field: keyof Participant, value: string) => void;
@@ -476,7 +487,9 @@ function ParticipantForm({
               className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white"
             >
               <option value="double">{t.doubleRoom}</option>
-              <option value="single">{t.singleRoom}</option>
+              {roomOptions?.triple && <option value="triple">{t.tripleRoom}</option>}
+              {roomOptions?.quad && <option value="quad">{t.quadRoom}</option>}
+              {(roomOptions?.single ?? true) && <option value="single">{t.singleRoom}</option>}
             </select>
           </div>
         )}

@@ -23,6 +23,7 @@ export default function Footer({ settings }: Props) {
   ];
 
   const destinationLinks = [
+    { name: "Umre", href: lp("/turlar?destinasyon=umre") },
     { name: "Mısır", href: lp("/turlar?destinasyon=misir") },
     { name: "Fas", href: lp("/turlar?destinasyon=fas") },
     { name: "Özbekistan", href: lp("/turlar?destinasyon=ozbekistan") },

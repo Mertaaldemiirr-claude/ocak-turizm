@@ -7,6 +7,7 @@ import type { SiteSettings } from "@/sanity/lib/types";
 import { useTranslation, useLocalePath } from "./LocaleProvider";
 
 const slides = [
+  { image: "/images/umre-hero.jpg", label: "Umre Programı" },
   { image: "/images/misir-hero-new.jpg", video: "/images/hero-video.mp4", label: "Mısır Turu" },
   { image: "/images/fas-hero-new.jpg", label: "Fas Turu" },
   { image: "/images/ozbekistan-hero-new.jpg", label: "Özbekistan Turu" },
